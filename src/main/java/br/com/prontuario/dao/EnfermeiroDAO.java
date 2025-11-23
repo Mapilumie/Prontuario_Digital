@@ -24,10 +24,24 @@ public class EnfermeiroDAO implements IEnfermeiroDAO {
             pst.setString(3, enfermeiro.getEmail());
             pst.setString(4, enfermeiro.getSenha());
             pst.execute();
-            pst.close();
-            conexao.close();
         } catch (SQLException e) {
             System.err.println("Erro ao salvar enfermeiro: " + e.getMessage());
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar PreparedStatement: " + e.getMessage());
+                }
+            }
+
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar Connection: " + e.getMessage());
+                }
+            }
         }
 
     }
@@ -54,11 +68,32 @@ public class EnfermeiroDAO implements IEnfermeiroDAO {
                     enfermeiros.add(enfermeiro);
                 }
             }
-            rs.close();
-            pst.close();
-            conexao.close();
         } catch (SQLException e) {
             System.err.println("Erro ao listar enfermeiros: " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar ResultSet: " + e.getMessage());
+                }
+            }
+
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar PreparedStatement: " + e.getMessage());
+                }
+            }
+
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar Connection: " + e.getMessage());
+                }
+            }
         }
         return enfermeiros;
     }
@@ -84,11 +119,32 @@ public class EnfermeiroDAO implements IEnfermeiroDAO {
                     enfermeiro.setSenha(rs.getString("senha"));
                 }
             }
-            rs.close();
-            pst.close();
-            conexao.close();
         } catch (SQLException e) {
             System.err.println("Erro ao buscar enfermeiro por coren \"" + coren + "\": " + e.getMessage());
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar ResultSet:" + e.getMessage());
+                }
+            }
+
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar PreparedStatement: " + e.getMessage());
+                }
+            }
+
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar Connection: " + e.getMessage());
+                }
+            }
         }
         return enfermeiro;
     }
@@ -106,10 +162,24 @@ public class EnfermeiroDAO implements IEnfermeiroDAO {
             pst.setString(3, enfermeiro.getSenha());
             pst.setString(4, enfermeiro.getCoren());
             pst.execute();
-            pst.close();
-            conexao.close();
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar enfermeiro: " + e.getMessage());
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar PreparedStatement: " + e.getMessage());
+                }
+            }
+
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar Connection: " + e.getMessage());
+                }
+            }
         }
     }
 
@@ -123,10 +193,24 @@ public class EnfermeiroDAO implements IEnfermeiroDAO {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, enfermeiro.getCoren());
             pst.execute();
-            pst.close();
-            conexao.close();
         } catch (SQLException e) {
             System.err.println("Erro ao deletar enfermeiro: " + e.getMessage());
+        } finally {
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar PreparedStatement: " + e.getMessage());
+                }
+            }
+
+            if (conexao != null) {
+                try {
+                    conexao.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar Connection: " + e.getMessage());
+                }
+            }
         }
 
     }
