@@ -14,12 +14,13 @@ CREATE TABLE IF NOT EXISTS paciente (
 	nome varchar (15) NOT NULL,
 	sobrenome varchar (40) NOT NULL,
 	estadoCivil varchar (10),
-	endereco varchar (40),
+	endereco varchar (150),
+	id_endereco int
 	sexo char CHECK (sexo in ('F', 'f', 'M', 'm')),
 	peso float,
 	dataNascimento date,
-	dataSaida date,
-	dataEntrada date,
+	dataSaida timestamptz,
+	dataEntrada timestamptz,
 
 	PRIMARY KEY (CPF_Paciente)
 );
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS acompanhante (
 	PRIMARY KEY (CPF_Acompanhante),
 
 	FOREIGN KEY (CPF_Paciente) REFERENCES paciente (CPF_Paciente)
-		ON DELETE cascade ON UPDATE cascade
+		ON DELETE cascade ON UPDATE cascade -- conversar com Gabriel para mudar para ON DELETE cascade ON UPDATE cascade
 );
 
 CREATE TABLE IF NOT EXISTS fatorRisco (
@@ -69,6 +70,8 @@ CREATE TABLE IF NOT EXISTS fatorRisco (
 	deficitNutricional boolean,
 	foraDeRisco boolean,
 	alteracaoConsciencia boolean,
+	fragilidadeCapilar boolean,
+    usoAlcoolDrogas boolean,
 	CPF_Paciente varchar (11),
 
 	PRIMARY KEY (Id_FatorRisco),
@@ -93,7 +96,7 @@ CREATE TABLE IF NOT EXISTS historicoSaude (
 	doencasInfectocontagiosas boolean,
 	neoplasia boolean,
 	doencaRenal boolean,
-	outro boolean,
+	doencaCardiovascular boolean,
 	CPF_Paciente varchar (11),
 
 	PRIMARY KEY (Id_HistoricoSaude),
@@ -106,7 +109,7 @@ CREATE TABLE IF NOT EXISTS prontuario (
 	Id_Prontuario serial,
 	observacao varchar (300),
 	motivoOncologico varchar (20) NOT NULL,
-	dataEmissao date,
+	dataEmissao timestamptz,
 	COREN varchar (10),
 	Id_FatorRisco integer,
 	Id_HistoricoSaude integer,
