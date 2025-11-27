@@ -1,0 +1,21 @@
+.titulo {
+    -fx-font-family: 'Afacad';
+    -fx-font-weight: bold;
+}
+
+.labels {
+    -fx-font-family: 'Afacad';
+}
+
+.labelhover {
+    -fx-font-family: 'Afacad Semibold';
+}
+
+.botao {
+    -fx-font-family: 'Afacad Semibold';
+}
+
+.textField {
+    -fx-font-family: 'Afacad';
+    -fx-font-size: 15px;
+}

@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #E0F8E2;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="72.0" prefWidth="700.0" style="-fx-background-color: #4C9292;">
+         <children>
+            <ImageView fitHeight="52.0" fitWidth="54.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/voltar.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fitHeight="56.0" fitWidth="50.0" layoutX="635.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/opcoes.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children></AnchorPane>
+      <AnchorPane layoutX="59.0" layoutY="103.0" prefHeight="366.0" prefWidth="583.0" style="-fx-background-color: #C9CCCC;">
+         <children>
+            <Label layoutX="52.0" layoutY="19.0" text="Prontuário">
+               <font>
+                  <Font name="Afacad SemiBold" size="30.0" />
+               </font>
+            </Label>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="15.0" layoutY="58.0" prefHeight="250.0" prefWidth="554.0" stylesheets="@../util/telaProntuário.css">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="569.0" spacing="10.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="Nome:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="34.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="Sobrenome:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="34.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="CPF:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="34.0" prefWidth="345.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="Sexo:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox prefHeight="34.0" prefWidth="223.0" promptText="Sexo" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;" styleClass="comboBoxes" stylesheets="@../util/cadastroPacientes.css" />
+                              <Label prefHeight="20.0" prefWidth="86.0" text="Peso (em kg):">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Spinner prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: transparent;" stylesheets="@../util/cadastroPacientes.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Spinner>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label prefHeight="20.0" prefWidth="127.0" text="Data de Nascimento:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="14.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker prefHeight="34.0" prefWidth="127.0" style="-fx-background-color: transparent;" styleClass="date-pickers" stylesheets="@../util/cadastroPacientes.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </DatePicker>
+                              <Label text="Estado civil:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox prefHeight="34.0" prefWidth="188.0" promptText="Estado civil" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;" styleClass="comboBoxes" stylesheets="@../util/cadastroPacientes.css" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="Data de Entrada:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker prefHeight="34.0" prefWidth="157.0" style="-fx-background-color: transparent;" styleClass="date-pickers" stylesheets="@../util/cadastroPacientes.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </DatePicker>
+                              <Label text="Data de Saída:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker prefHeight="34.0" prefWidth="157.0" style="-fx-background-color: transparent;" styleClass="date-pickers" stylesheets="@../util/cadastroPacientes.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </DatePicker>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="285.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="Profissão:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="34.0" prefWidth="212.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextField>
+                              <Label text="Tel.:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="34.0" prefWidth="182.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="Cidade:">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="34.0" prefWidth="212.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="Endereço (rua, número, bairro):">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField prefHeight="34.0" prefWidth="315.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="430.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                           <children>
+                              <AnchorPane prefHeight="221.0" prefWidth="259.0" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                                 <children>
+                                    <Label layoutX="24.0" layoutY="14.0" text="Lesão de pele:">
+                                       <font>
+                                          <Font name="Afacad SemiBold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="18.0" layoutY="37.0" prefHeight="149.0" prefWidth="223.0" spacing="2.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Alteração no nível de consciência">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Déficit de mobilidade e atividade">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="29.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Déficit nutricional">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="48.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Pele úmida/molhada">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="67.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Fricção/Cisalhamento">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="86.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Limitações da mobilidade">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="105.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Fora de risco">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="221.0" prefWidth="256.0" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                                 <children>
+                                    <Label layoutX="24.0" layoutY="14.0" text="Flebite:">
+                                       <font>
+                                          <Font name="Afacad SemiBold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="14.0" layoutY="37.0" prefHeight="149.0" prefWidth="223.0" spacing="2.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Criança/Idoso">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Alteração do turgor da pele">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="29.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Imunodepressão">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="48.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Fragilidade capilar">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="67.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Uno de quimioterapia">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="86.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Medicações Hiperosmolares">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="105.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Fora de risco">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="221.0" prefWidth="256.0" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                                 <children>
+                                    <Label layoutX="24.0" layoutY="14.0" text="Queda:">
+                                       <font>
+                                          <Font name="Afacad SemiBold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="14.0" layoutY="37.0" prefHeight="149.0" prefWidth="223.0" spacing="2.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Criança/Idoso/Gestante">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Convulsões">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="29.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Confusão mental/Delirium">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="48.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Visão/audição diminuída">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="67.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Hipotensão postural">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="86.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Uso de álcool/drogas">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="105.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Fora de risco">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="323.0" prefWidth="558.0" style="-fx-background-color: white; -fx-background-radius: 8px;">
+                                 <children>
+                                    <Label layoutX="24.0" layoutY="14.0" text="Histórico de saúde:">
+                                       <font>
+                                          <Font name="Afacad SemiBold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox layoutX="18.0" layoutY="37.0" prefHeight="149.0" prefWidth="223.0" spacing="2.0">
+                                       <children>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Doenças infectocontagiosas">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Dislipidemia">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Etilismo">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Hipertensão">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Transfusão sanguínea">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Virose na infância">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Tabagismo">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Neoplasia">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="29.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Doença autoimune">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="48.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Doença respiratória">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="67.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Doença cardiovascular">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="86.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Diabetes">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                          <CheckBox layoutX="10.0" layoutY="105.0" mnemonicParsing="false" styleClass="checkBoxes" stylesheets="@../util/telaProntuário.css" text="Doença renal">
+                                             <font>
+                                                <Font name="Afacad Regular" size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </CheckBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="75.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="Alergias:">
+                                 <font>
+                                    <Font name="Afacad SemiBold" size="17.0" />
+                                 </font>
+                              </Label>
+                              <TextArea prefHeight="94.0" prefWidth="263.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;" wrapText="true">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="1401.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="Observações:">
+                                 <font>
+                                    <Font name="Afacad SemiBold" size="17.0" />
+                                 </font>
+                              </Label>
+                              <TextArea prefHeight="94.0" prefWidth="263.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;" wrapText="true">
+                                 <font>
+                                    <Font name="Afacad Regular" size="15.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="1411.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                           <children>
+                              <Label text="Assinatura do enfermeiro:">
+                                 <font>
+                                    <Font name="Afacad SemiBold" size="17.0" />
+                                 </font>
+                              </Label>
+                              <AnchorPane prefHeight="65.0" prefWidth="499.0" style="-fx-background-color: #ffffff; -fx-background-radius: 8px;">
+                                 <children>
+                                    <ImageView fitHeight="53.0" fitWidth="428.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Button layoutX="450.0" layoutY="1.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="67.0" style="-fx-background-color: #4c9292; -fx-background-radius: 8px;">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="63.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../img/imagem.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </ScrollPane>
+            <Button layoutX="463.0" layoutY="321.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="93.0" style="-fx-background-color: #4c9292;" text="Finalizar" textFill="WHITE">
+               <font>
+                  <Font name="Afacad SemiBold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children></AnchorPane>
+      <AnchorPane layoutX="476.0" layoutY="53.0" prefHeight="213.0" prefWidth="200.0" style="-fx-background-color: #6EACAC; -fx-background-radius: 5px;" visible="false">
+         <children>
+            <Label layoutX="78.0" layoutY="42.0" text="Sistema">
+               <font>
+                  <Font name="Afacad SemiBold" size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="30.0" layoutY="71.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-radius: 7px; -fx-background-color: #fefefe;" text="Fechar Programa">
+               <font>
+                  <Font name="Afacad SemiBold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="30.0" layoutY="121.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-radius: 7px; -fx-background-color: #F6373A;" text="Encerrar Sessão" textFill="WHITE">
+               <font>
+                  <Font name="Afacad SemiBold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
+         <children>
+            <AnchorPane layoutX="176.0" layoutY="176.0" prefHeight="149.0" prefWidth="348.0" style="-fx-background-color: #C9CCCC; -fx-background-radius: 8px;">
+               <children>
+                  <Label layoutX="32.0" layoutY="14.0" prefHeight="60.0" prefWidth="284.0" text="Tem certeza que deseja encerrar a sessão?" wrapText="true">
+                     <font>
+                        <Font name="Afacad Regular" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="111.0" layoutY="96.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" text="Sim" textFill="WHITE">
+                     <font>
+                        <Font name="Afacad SemiBold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="187.0" layoutY="96.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #F6373A; -fx-background-radius: 5px;" text="Não" textFill="WHITE">
+                     <font>
+                        <Font name="Afacad SemiBold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
+         <children>
+            <AnchorPane layoutX="176.0" layoutY="176.0" prefHeight="149.0" prefWidth="348.0" style="-fx-background-color: #C9CCCC; -fx-background-radius: 8px;">
+               <children>
+                  <Label layoutX="47.0" layoutY="14.0" prefHeight="60.0" prefWidth="255.0" text="Tem certeza que deseja sair do programa?" wrapText="true">
+                     <font>
+                        <Font name="Afacad Regular" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="111.0" layoutY="96.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" text="Sim" textFill="WHITE">
+                     <font>
+                        <Font name="Afacad SemiBold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="187.0" layoutY="96.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #F6373A; -fx-background-radius: 5px;" text="Não" textFill="WHITE">
+                     <font>
+                        <Font name="Afacad SemiBold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

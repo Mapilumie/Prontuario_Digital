@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prontuario.controller.CadastroController">
+   <children>
+      <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../images/background_login.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="65.0" layoutY="34.0" prefHeight="55.0" prefWidth="154.0" text="Cadastro">
+         <font>
+            <Font name="Afacad Bold" size="34.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="89.0" text="Nome:">
+         <font>
+            <Font name="Afacad Regular" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNome" layoutX="50.0" layoutY="118.0" prefHeight="36.0" prefWidth="261.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 8px;">
+         <font>
+            <Font name="Afacad Regular" size="15.0" />
+         </font>
+      </TextField>
+      <Label layoutX="50.0" layoutY="167.0" text="Coren:">
+         <font>
+            <Font name="Afacad Regular" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCoren" layoutX="50.0" layoutY="196.0" prefHeight="36.0" prefWidth="261.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 8px;">
+         <font>
+            <Font name="Afacad Regular" size="15.0" />
+         </font>
+      </TextField>
+      <Label layoutX="50.0" layoutY="250.0" text="Email:">
+         <font>
+            <Font name="Afacad Regular" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="50.0" layoutY="279.0" prefHeight="36.0" prefWidth="261.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 8px;">
+         <font>
+            <Font name="Afacad Regular" size="15.0" />
+         </font>
+      </TextField>
+      <Label layoutX="50.0" layoutY="328.0" text="Senha:">
+         <font>
+            <Font name="Afacad Regular" size="17.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtSenha" layoutX="50.0" layoutY="357.0" prefHeight="36.0" prefWidth="261.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 8px;">
+         <font>
+            <Font name="Afacad Regular" size="13.0" />
+         </font>
+      </PasswordField>
+      <Label layoutX="50.0" layoutY="399.0" text="Já possui uma conta?">
+         <font>
+            <Font name="Afacad Regular" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblLogin" layoutX="181.0" layoutY="399.0" onMouseClicked="#abrirTelaLogin" onMouseEntered="#hoverLogin" onMouseExited="#exitLogin" text="Fazer login" textFill="#90fbff">
+         <font>
+            <Font name="Afacad SemiBold" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Label>
+      <Button fx:id="btnCadastrar" layoutX="50.0" layoutY="432.0" mnemonicParsing="false" onAction="#cadastrar" onMouseEntered="#hoverCadastrar" onMouseExited="#exitCadastrar" prefHeight="36.0" prefWidth="261.0" style="-fx-background-color: #d9d9d9; -fx-background-radius: 8px;" text="Cadastrar">
+         <font>
+            <Font name="Afacad SemiBold" size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <AnchorPane fx:id="avisoCamposVazios" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
+         <children>
+            <AnchorPane layoutX="176.0" layoutY="176.0" prefHeight="149.0" prefWidth="348.0" style="-fx-background-color: #C9CCCC; -fx-background-radius: 8px;">
+               <children>
+                  <Label layoutX="63.0" layoutY="37.0" prefHeight="27.0" prefWidth="222.0" styleClass="labels" stylesheets="@../css/inicio.css" text="Preencha os campos vazios." wrapText="true">
+                     <font>
+                        <Font name="Afacad Regular" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnOkCamposVazios" layoutX="149.0" layoutY="84.0" mnemonicParsing="false" onAction="#ocultarAvisoCamposVazios" onMouseEntered="#hoverOkCamposVazios" onMouseExited="#exitOkCamposVazios" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" styleClass="botao" stylesheets="@../css/inicio.css" text="OK" textFill="WHITE">
+                     <font>
+                        <Font name="Afacad SemiBold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,65 @@
+.date-pickers .text-field {
+    -fx-background-color: #ffffff;  
+    -fx-text-fill: #000000;                
+    -fx-font-size: 15px;
+    -fx-font-family: 'Afacad';             
+}
+
+.date-pickers .arrow-button {
+    -fx-background-color: #4c9292;
+    -fx-text-fill: white;
+}
+
+.date-pickers .arrow {
+    -fx-background-color: white;
+}
+
+.date-pickers .arrow-button:hover {
+    -fx-background-color: #297373;
+}
+
+.spinner .text-field {
+    -fx-font-family: 'Afacad';
+    -fx-font-size: 15px;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: #4c9292;
+}
+
+.spinner .increment-arrow,
+.spinner .decrement-arrow {
+    -fx-background-color: white;
+}
+
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover {
+    -fx-background-color: #297373;
+}
+
+.comboBoxes {
+    -fx-font-family: 'Afacad Semibold';
+    -fx-font-size: 15px;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane .thumb {
+  -fx-background-color: #4c9292;
+  -fx-background-radius: 0px;
+}
+
+.scroll-pane .thumb:hover {
+  -fx-background-color: #297373;
+}
