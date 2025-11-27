@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS paciente (
 	sobrenome varchar (40) NOT NULL,
 	estadoCivil varchar (10),
 	endereco varchar (150),
-	id_endereco int
 	sexo char CHECK (sexo in ('F', 'f', 'M', 'm')),
 	peso float,
 	dataNascimento date,
