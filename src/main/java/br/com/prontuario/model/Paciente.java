@@ -21,7 +21,7 @@ public class Paciente {
 
     public Paciente() {
         this.dataEntrada = LocalDateTime.now();
-        this.dataSaida = dataSaida = null;
+        this.dataSaida = null;
     }
 
     public Paciente(String cpf, String nome, String sobrenome, String estadoCivil, String endereco, char sexo, Double peso, LocalDate dataNascimento) {
@@ -34,7 +34,7 @@ public class Paciente {
         this.peso = peso;
         this.dataNascimento = dataNascimento;
         this.dataEntrada = LocalDateTime.now();
-        this.dataSaida = dataSaida = null;
+        this.dataSaida = null;
     }
 
     public String getCpf() {
