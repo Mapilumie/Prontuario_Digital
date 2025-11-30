@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS acompanhante (
 	PRIMARY KEY (CPF_Acompanhante),
 
 	FOREIGN KEY (CPF_Paciente) REFERENCES paciente (CPF_Paciente)
-		ON DELETE cascade ON UPDATE cascade -- conversar com Gabriel para mudar para ON DELETE cascade ON UPDATE cascade
+		ON DELETE cascade ON UPDATE cascade 
 );
 
 CREATE TABLE IF NOT EXISTS fatorRisco (
