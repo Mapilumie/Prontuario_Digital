@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #E0F8E2;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prontuario.controller.CadastroPacientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #E0F8E2;" xmlns="http://javafx.com/javafx/8.0.431" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prontuario.controller.CadastroPacientesController">
    <children>
       <AnchorPane prefHeight="72.0" prefWidth="700.0" style="-fx-background-color: #4C9292;">
          <children>
@@ -295,6 +295,27 @@
                      </cursor>
                   </Button>
                   <Button fx:id="btnNaoSairPrograma" layoutX="187.0" layoutY="96.0" mnemonicParsing="false" onAction="#ocultarFecharPrograma" onMouseEntered="#hoverNaoFecharPrograma" onMouseExited="#exitNaoFecharPrograma" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #F6373A; -fx-background-radius: 5px;" text="Não" textFill="WHITE">
+                     <font>
+                        <Font name="Afacad SemiBold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="avisoCamposObrigatorios" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
+         <children>
+            <AnchorPane layoutX="176.0" layoutY="176.0" prefHeight="149.0" prefWidth="348.0" style="-fx-background-color: #C9CCCC; -fx-background-radius: 8px;">
+               <children>
+                  <Label layoutX="50.0" layoutY="25.0" prefHeight="60.0" prefWidth="248.0" styleClass="labels" stylesheets="@../css/inicio.css" text="É necessário que preencha os campos obrigatórios." wrapText="true">
+                     <font>
+                        <Font name="Afacad Regular" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnOkCamposObrigatorios" layoutX="149.0" layoutY="95.0" mnemonicParsing="false" onAction="#ocultarAvisoCamposObrigatorios" onMouseEntered="#hoverOkCamposObrigatorios" onMouseExited="#exitOkCamposObrigatorios" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" styleClass="botao" stylesheets="@../css/inicio.css" text="OK" textFill="WHITE">
                      <font>
                         <Font name="Afacad SemiBold" size="15.0" />
                      </font>

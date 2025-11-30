@@ -23,6 +23,9 @@ public class App extends Application {
 		Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-SemiBold.ttf"), 18);
 		Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-VariableFont_wdth,wght.ttf"), 18);
 		
+		// Image icone = new Image(getClass().getResource("").toExternalForm());
+		// stage.getIcons().add(icone);
+		
 		stage.setTitle("Prontuário Digital - Login");
 		stage.setScene(scene);
 		stage.setResizable(false);

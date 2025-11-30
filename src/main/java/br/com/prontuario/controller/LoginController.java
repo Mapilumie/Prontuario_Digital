@@ -1,13 +1,17 @@
 package br.com.prontuario.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
+
 import br.com.prontuario.dao.EnfermeiroDAO;
 import br.com.prontuario.model.Enfermeiro;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,7 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class LoginController {
+public class LoginController implements Initializable {
 	// Componentes da interface
 	@FXML private TextField txtEmail;
 	@FXML private PasswordField txtSenha;
@@ -30,6 +34,27 @@ public class LoginController {
 	@FXML private Button btnOkNaoLogado;
 	@FXML private AnchorPane avisoCamposVazios;
 	@FXML private Button btnOkCamposVazios;
+	
+	// Variaveis e instancias
+	private boolean emailVazio;
+	private boolean senhaVazia;
+	
+	@Override 
+	public void initialize(URL url, ResourceBundle rb) {
+		txtEmail.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (emailVazio && !newValue.isEmpty()) {
+				txtEmail.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px");
+				emailVazio = false;
+			}
+		});
+		
+		txtSenha.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (senhaVazia && !newValue.isEmpty()) {
+				txtSenha.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px");
+				senhaVazia = false;
+			}
+		});
+	}
 	
 	@FXML
 	private void hoverEntrar(MouseEvent event) {
@@ -50,7 +75,7 @@ public class LoginController {
 			List<Enfermeiro> enfermeiros = dao.findAll();
 			Enfermeiro e = null;
 			
-			for (int i = 0; i < enfermeiros.size(); i++) {
+			for (int i = 0; i < enfermeiros.size(); i++) { // Linha 78
 				if (email.equals(enfermeiros.get(i).getEmail()) && senha.equals(enfermeiros.get(i).getSenha())) {
 					e = enfermeiros.get(i);
 					break;
@@ -73,23 +98,18 @@ public class LoginController {
 				catch (IOException ex) {
 					ex.printStackTrace();
 				}
-			} else {
-				new Thread() {
-					public void run() {
-						try {
-							Thread.sleep(200);
-						} catch (InterruptedException ex) {
-							Thread.currentThread().interrupt();
-						}
-
-						Platform.runLater(() -> {
-							avisoNaoLogado.setVisible(true);
-						});
-					}
-				}.start();
+			} 
+			else {
+				avisoNaoLogado.setVisible(true);
 			} 
 		}
 		else {
+			emailVazio = txtEmail.getText().isEmpty();
+			senhaVazia = txtSenha.getText().isEmpty();
+			
+			if (emailVazio) txtEmail.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px; -fx-border-color: #f6373a; -fx-border-width: 2px; -fx-border-radius: 8px");
+			if (senhaVazia) txtSenha.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px; -fx-border-color: #f6373a; -fx-border-width: 2px; -fx-border-radius: 8px");
+			
 			avisoCamposVazios.setVisible(true);
 		}
 	}

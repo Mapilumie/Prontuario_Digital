@@ -1,7 +1,6 @@
 package br.com.prontuario.app;
 
 import java.io.IOException;
-import br.com.prontuario.controller.SplashController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +14,9 @@ public class Main extends Application {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaSplash.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
-		SplashController s = loader.getController();
+		
+		// Image icone = new Image(getClass().getResource("").toExternalForm());
+		// stage.getIcons().add(icone);
 		
 		stage.setTitle("Prontuário Digital");
 		stage.setScene(scene);

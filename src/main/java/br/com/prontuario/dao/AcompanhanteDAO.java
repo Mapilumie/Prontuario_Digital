@@ -69,8 +69,8 @@ public class AcompanhanteDAO implements IAcompanhanteDAO {
                     Acompanhante acompanhante = new Acompanhante();
                     acompanhante.setCpf(rs.getString("CPF_Acompanhante"));
                     acompanhante.setPaciente(paciente);
-                    acompanhante.setNome("nomeAcompanhante");
-                    acompanhante.setRelacao("relacao");
+                    acompanhante.setNome(rs.getString("nomeAcompanhante"));
+                    acompanhante.setRelacao(rs.getString("relacao"));
                     acompanhantes.add(acompanhante);
                 }
             }

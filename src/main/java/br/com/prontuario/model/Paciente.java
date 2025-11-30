@@ -116,6 +116,14 @@ public class Paciente {
     public void setDataSaida(LocalDateTime dataSaida) {
         this.dataSaida = dataSaida;
     }
+    
+    public final DateTimeFormatter getFormatoData() {
+    	return FORMATO_DATA;
+    }
+    
+    public final DateTimeFormatter getFormatoDataHora() {
+    	return FORMATO_DATAHORA;
+    }
 
     @Override
     public String toString() {

@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class FatorRiscoDAO implements IFatorRIscoDAO {
     public void save(FatorRisco fatorRisco) {
-        String sql = "INSERT INTO (alteracaoConsciencia, deficitMobilidade, deficitNutricional, peleUmida, cisalhamento, limitacaoMobilidade, criancaIdosoGestante, turgorPele, imunoDepressao, fragilidadeCapilar, quimioterapia, medHiperosmolar, convulsoes, delirium, visaoAudicao, hipotensao, usoAlcoolDrogas, foraDeRisco, CPF_Paciente) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO fatorRisco (alteracaoConsciencia, deficitMobilidade, deficitNutricional, peleUmida, cisalhamento, limitacaoMobilidade, criancaIdosoGestante, turgorPele, imunoDepressao, fragilidadeCapilar, quimioterapia, medHiperosmolar, convulsoes, delirium, visaoAudicao, hipotensao, usoAlcoolDrogas, foraDeRisco, CPF_Paciente) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pst = null;
         Connection conexao = null;
         ResultSet rs = null;

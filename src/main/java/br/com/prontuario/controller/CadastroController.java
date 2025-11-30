@@ -34,31 +34,84 @@ public class CadastroController implements Initializable {
 	@FXML private AnchorPane avisoCamposVazios;
 	@FXML private Button btnOkCamposVazios;
 	
+	// Variaveis e instancias
+	private boolean nomeVazio;
+	private boolean corenVazio;
+	private boolean emailVazio;
+	private boolean senhaVazia;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		txtCoren.setTextFormatter(new TextFormatter<String>(change -> {
-		    String text = change.getControlNewText().toUpperCase();
+		txtCoren.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (newValue.equals(oldValue)) return;
+			
+			String raw = newValue.replaceAll("[^A-Z0-9]", "").toUpperCase();
+			
+			 if (raw.isEmpty()) {
+		        txtCoren.setText("COREN-");
+		        txtCoren.positionCaret(txtCoren.getText().length());
+		        return;
+			 }
+			 
+			 if (raw.startsWith("COREN")) {
+				 raw = raw.substring(5);
+			 }
+			 
+			 String uf = raw.replaceAll("[^A-Z]", "");
+			 if (uf.length() > 2) uf = uf.substring(0, 2);
+			 
+			 String digits = raw.replaceAll("[A-Z]", "");
+			 if (digits.length() > 6) digits = digits.substring(0, 6);
+			 
+			 StringBuilder sb = new StringBuilder("COREN-");
+			 sb.append(uf);
+			 
+			 if (uf.length() == 2 && digits.length() > 0) {
+		        sb.append(" ");
+			 }
+			 
+			 if (digits.length() <= 3) {
+		        sb.append(digits);
+		     } 
+			 else {
+		        sb.append(digits.substring(0, 3)).append(".").append(digits.substring(3));
+			 }
 
-		    if (!text.matches("[A-Z0-9 \\-]*")) {
-		        return null;
+		    String formatted = sb.toString();
+
+		    if (!formatted.equals(newValue)) {
+		        txtCoren.setText(formatted);
+		        txtCoren.positionCaret(formatted.length());
 		    }
-
-		    text = text.replaceAll("^COREN", "COREN");
-		    text = text.replaceAll("^COREN-?", "COREN-");
-
-		    if (!text.startsWith("COREN-")) {
-		        text = "COREN-";
-		    }
-
-		    if (text.length() > 18) {
-		        return null;
-		    }
-
-		    change.setText(text);
-		    change.setRange(0, change.getControlText().length());
-
-		    return change;
-		}));
+		});
+		
+		txtNome.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (nomeVazio && !newValue.isEmpty()) {
+				txtNome.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px");
+				nomeVazio = false;
+			}
+		});
+		
+		txtCoren.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (corenVazio && !newValue.replaceAll("\\D", "").isEmpty()) {
+				txtCoren.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px");
+				corenVazio = false;
+			}
+		});
+		
+		txtEmail.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (emailVazio && !newValue.isEmpty()) {
+				txtEmail.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px");
+				emailVazio = false;
+			}
+		});
+		
+		txtSenha.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (senhaVazia && !newValue.isEmpty()) {
+				txtSenha.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px");
+				senhaVazia = false;
+			}
+		});
 	}
 	
 	@FXML
@@ -100,6 +153,16 @@ public class CadastroController implements Initializable {
 			} 
 		}
 		else {
+			nomeVazio = txtNome.getText().isEmpty();
+			corenVazio = txtCoren.getText().replaceAll("\\D", "").isEmpty();
+			emailVazio = txtEmail.getText().isEmpty();
+			senhaVazia = txtSenha.getText().isEmpty();
+			
+			if (nomeVazio) txtNome.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px; -fx-border-color: #f6373a; -fx-border-width: 2px; -fx-border-radius: 8px");
+			if (corenVazio) txtCoren.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px; -fx-border-color: #f6373a; -fx-border-width: 2px; -fx-border-radius: 8px");
+			if (emailVazio) txtEmail.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px; -fx-border-color: #f6373a; -fx-border-width: 2px; -fx-border-radius: 8px");
+			if (senhaVazia) txtSenha.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px; -fx-border-color: #f6373a; -fx-border-width: 2px; -fx-border-radius: 8px");
+			
 			avisoCamposVazios.setVisible(true);
 		}
 	}

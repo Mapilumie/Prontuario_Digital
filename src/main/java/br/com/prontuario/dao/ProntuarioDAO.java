@@ -87,25 +87,22 @@ public class ProntuarioDAO implements IProntuarioDAO {
                     prontuario.setObservacao(rs.getString("observacao"));
                     prontuario.setMotivoOncologico(rs.getString("motivoOncologico"));
 
-                    ZonedDateTime emissaoFusoHorario = rs.getTimestamp("dataEmisao").toInstant().atZone(FUSO_HORARIO);
+                    ZonedDateTime emissaoFusoHorario = rs.getTimestamp("dataEmissao").toInstant().atZone(FUSO_HORARIO);
                     prontuario.setDataEmissao(emissaoFusoHorario.toLocalDateTime());
 
                     String fkEnfermeiro = rs.getString("COREN");
                     if (fkEnfermeiro != null) {
-                        Enfermeiro enfermeiro = new Enfermeiro();
-                        enfermeiro.setCoren(fkEnfermeiro);
+                        Enfermeiro enfermeiro = new EnfermeiroDAO().findByCoren(fkEnfermeiro);
                         prontuario.setEnfermeiro(enfermeiro);
                     }
                     long fkFatorRisco = rs.getLong("Id_FatorRisco");
                     if (fkFatorRisco != 0) {
-                        FatorRisco fatorRisco = new FatorRisco();
-                        fatorRisco.setId(fkFatorRisco);
+                        FatorRisco fatorRisco = new FatorRiscoDAO().findById(fkFatorRisco);
                         prontuario.setFatorRisco(fatorRisco);
                     }
                     long fkHistoricoSaude = rs.getLong("Id_HistoricoSaude");
                     if (fkHistoricoSaude != 0) {
-                        HistoricoSaude historicoSaude = new HistoricoSaude();
-                        historicoSaude.setId(fkHistoricoSaude);
+                        HistoricoSaude historicoSaude = new HistoricoSaudeDAO().findById(fkHistoricoSaude);
                         prontuario.setHistoricoSaude(historicoSaude);
                     }
                     prontuarios.add(prontuario);

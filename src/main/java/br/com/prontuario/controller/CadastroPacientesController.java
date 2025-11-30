@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import br.com.prontuario.app.App;
@@ -56,38 +57,49 @@ public class CadastroPacientesController implements Initializable {
 	@FXML private AnchorPane painelOpcoes;
 	@FXML private Button btnFecharPrograma;
 	@FXML private Button btnEncerrarSessao;
-	@FXML private Button btnCadastrarPacientes;
 	@FXML private AnchorPane avisoEncerrarSessao;
 	@FXML private Button btnSimEncerrarSessao;
 	@FXML private Button btnNaoEncerrarSessao;
 	@FXML private AnchorPane avisoSairPrograma;
 	@FXML private Button btnSimSairPrograma;
 	@FXML private Button btnNaoSairPrograma;
+	@FXML private AnchorPane avisoCamposObrigatorios;
+	@FXML private Button btnOkCamposObrigatorios;
 	
 	// Variaveis e instancias
+	private Paciente modificado;
 	private Enfermeiro e;
 	private boolean exibirOpcoes;
 	private boolean veioDaTelaPrincipal;
 	private boolean veioDoPerfilPaciente;
 	private boolean atualizar;
+	private boolean perfilOrigemPrincipal;
+	private boolean perfilOrigemPacientes;
+	private boolean nomeVazio;
+	private boolean sobrenomeVazio;
+	private boolean cpfVazio;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
+		nomeVazio = false;
+		sobrenomeVazio = false;
+		cpfVazio = false;
 		exibirOpcoes = false;
 		
 		ObservableList<String> sexo = FXCollections.observableArrayList("Feminino", "Masculino");
 		cbSexo.setItems(sexo);
 		
-		ObservableList<String> estadoCivil = FXCollections.observableArrayList("Solteiro(a)", "Casado(a)", "Separado(a)", "Divorciado(a)", "Viúvo(a)");
+		ObservableList<String> estadoCivil = FXCollections.observableArrayList("Solteiro", "Casado", "Separado", "Divorciado", "Viúvo");
 		cbEstadoCivil.setItems(estadoCivil);
 		
-		ObservableList<String> relacao = FXCollections.observableArrayList("Parente (pai, mãe, tio)", "Esposo(a)", "Filho(a)", "Amigo");
+		ObservableList<String> relacao = FXCollections.observableArrayList("Parente", "Esposo(a)", "Filho(a)", "Amigo");
 		cbRelacao.setItems(relacao);
 		
 		spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, 10.0, 0.1));
+		spPeso.setEditable(true);
 		
 		dpEntrada.setValue(LocalDate.now());
-		dpEntrada.setDisable(true);
+		dpEntrada.setMouseTransparent(true);
 		
 		txtCPF.addEventFilter(KeyEvent.KEY_TYPED, e -> {
 			if (!e.getCharacter().matches("[0-9]")) {
@@ -138,6 +150,27 @@ public class CadastroPacientesController implements Initializable {
 			txtCPFAcompanhante.positionCaret(sb.length());
 			e.consume();
 		});
+		
+		txtNome.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (nomeVazio && !newValue.isEmpty()) {
+				txtNome.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
+				nomeVazio = false;
+			}
+		});
+		
+		txtSobrenome.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (sobrenomeVazio && !newValue.isEmpty()) {
+				txtSobrenome.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
+				sobrenomeVazio = false;
+			}
+		});
+		
+		txtCPF.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (cpfVazio && !newValue.isEmpty()) {
+				txtCPF.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
+				cpfVazio = false;
+			}
+		});
 	}
 	
 	@FXML
@@ -154,7 +187,19 @@ public class CadastroPacientesController implements Initializable {
 			stage.setScene(scene);
 		}
 		else if (veioDoPerfilPaciente) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPerfilPaciente.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			PerfilPacienteController pP = loader.getController();
+			pP.carregarUsuario(e);
+			pP.carregarPaciente(modificado);
 			
+			if (perfilOrigemPrincipal) pP.origemTelaPrincipal();
+			if (perfilOrigemPacientes) pP.origemTelaPacientes();
+			
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setTitle("Prontuário Digital - Informações de " + modificado.getNome() + " " + modificado.getSobrenome());
+			stage.setScene(scene);
 		}
 	}
 	
@@ -170,55 +215,67 @@ public class CadastroPacientesController implements Initializable {
 	
 	@FXML
 	private void finalizar(ActionEvent event) throws IOException {
-		String nome = txtNome.getText();
-		String sobrenome = txtSobrenome.getText();
-		String cpf = txtCPF.getText().replaceAll("\\D", "");
-		char sexo = (cbSexo.getSelectionModel().getSelectedIndex() == 0) ? 'F' : 'M';
-		Double peso = spPeso.getValue();
-		LocalDate dataNascimento = dpNasc.getValue();
-		String estadoCivil = (String) cbEstadoCivil.getValue();
-		String endereco = txtEndereco.getText();
-		
-		Paciente p = new Paciente(cpf, nome, sobrenome, estadoCivil, endereco, sexo, peso, dataNascimento);
-		Acompanhante a = null;
-		
-		if (dpSaida.getValue() != null) {
-			LocalDateTime dataSaida = dpSaida.getValue().atStartOfDay();
-			p.setDataSaida(dataSaida);
-		}
-		
-		if (verificarAcompanhante()) {
-			String nomeAcompanhante = txtNomeAcompanhante.getText();
-			String cpfAcompanhante = txtCPFAcompanhante.getText().replaceAll("\\D", "");
-			String relacao = (String) cbRelacao.getValue();
+		if (verificarCamposObrigatorios()) {
+			String nome = txtNome.getText();
+			String sobrenome = txtSobrenome.getText();
+			String cpf = txtCPF.getText().replaceAll("\\D", "");
+			char sexo = (cbSexo.getSelectionModel().getSelectedIndex() == 0) ? 'F' : 'M';
+			Double peso = spPeso.getValue();
+			LocalDate dataNascimento = dpNasc.getValue();
+			String estadoCivil = (String) cbEstadoCivil.getValue();
+			String endereco = txtEndereco.getText();
+			Paciente p = new Paciente(cpf, nome, sobrenome, estadoCivil, endereco, sexo, peso, dataNascimento);
+			Acompanhante a = null;
 			
-			a = new Acompanhante(cpfAcompanhante, nomeAcompanhante, relacao, p);
-		}
-		
-		
-		if (!atualizar) {
-			PacienteDAO pDao = new PacienteDAO();
-			pDao.save(p);
-			
-			Cuida c = new Cuida(e, p);
-			CuidaDAO cDao = new CuidaDAO();
-			cDao.save(c);
-			
-			if (a != null) {
-				AcompanhanteDAO aDao = new AcompanhanteDAO();
-				aDao.save(a);
+			if (dpSaida.getValue() != null) {
+				LocalDateTime dataSaida = dpSaida.getValue().atStartOfDay();
+				p.setDataSaida(dataSaida);
+			}
+			if (verificarAcompanhante()) {
+				String nomeAcompanhante = txtNomeAcompanhante.getText();
+				String cpfAcompanhante = txtCPFAcompanhante.getText().replaceAll("\\D", "");
+				String relacao = (String) cbRelacao.getValue();
+
+				a = new Acompanhante(cpfAcompanhante, nomeAcompanhante, relacao, p);
 			}
 			
-			carregarTelaPrincipal(event);
+			if (!atualizar) {
+				PacienteDAO pDao = new PacienteDAO();
+				pDao.save(p);
+
+				Cuida c = new Cuida(e, p);
+				CuidaDAO cDao = new CuidaDAO();
+				cDao.save(c);
+
+				if (a != null) {
+					AcompanhanteDAO aDao = new AcompanhanteDAO();
+					aDao.save(a);
+				}
+
+				carregarTelaPrincipal(event);
+			} 
+			else {
+				PacienteDAO pDao = new PacienteDAO();
+				pDao.update(p);
+
+				if (a != null) {
+					AcompanhanteDAO aDao = new AcompanhanteDAO();
+					aDao.update(a);
+				}
+
+				carregarPerfilPaciente(p, event);
+			} 
 		}
 		else {
-			PacienteDAO pDao = new PacienteDAO();
-			pDao.update(p);
+			nomeVazio = txtNome.getText().isEmpty();
+			sobrenomeVazio = txtSobrenome.getText().isEmpty();
+			cpfVazio = txtCPF.getText().isEmpty();
 			
-			if (a != null) {
-				AcompanhanteDAO aDao = new AcompanhanteDAO();
-				aDao.update(a);
-			}
+			if (nomeVazio) txtNome.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
+			if (sobrenomeVazio) txtSobrenome.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
+			if (cpfVazio) txtCPF.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
+			
+			avisoCamposObrigatorios.setVisible(true);
 		}
 	}
 	
@@ -233,6 +290,31 @@ public class CadastroPacientesController implements Initializable {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setTitle("Prontuário Digital - " + e.getNome());
 		stage.setScene(scene);
+	}
+	
+	private void carregarPerfilPaciente(Paciente p, ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPerfilPaciente.fxml"));
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		PerfilPacienteController pP = loader.getController();
+		pP.carregarUsuario(e);
+		pP.carregarPaciente(p);
+		pP.notificarModificacao();
+		
+		if (perfilOrigemPrincipal) pP.origemTelaPrincipal();
+		if (perfilOrigemPacientes) pP.origemTelaPacientes();
+		
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.setTitle("Prontuário Digital - Informações de " + p.getNome());
+		stage.setScene(scene);
+	}
+	
+	private boolean verificarCamposObrigatorios() {
+		if (txtNome.getText().isEmpty() || txtSobrenome.getText().isEmpty() || txtCPF.getText().isEmpty()) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	private boolean verificarAcompanhante() {
@@ -350,6 +432,21 @@ public class CadastroPacientesController implements Initializable {
 		avisoEncerrarSessao.setVisible(false);
 	}
 	
+	@FXML
+	private void hoverOkCamposObrigatorios(MouseEvent event) {
+		btnOkCamposObrigatorios.setStyle("-fx-background-color: #297373; -fx-background-radius: 5px");
+	}
+	
+	@FXML
+	private void exitOkCamposObrigatorios(MouseEvent event) {
+		btnOkCamposObrigatorios.setStyle("-fx-background-color: #4c9292; -fx-background-radius: 5px");
+	}
+	
+	@FXML
+	private void ocultarAvisoCamposObrigatorios(ActionEvent event) {
+		avisoCamposObrigatorios.setVisible(false);
+	}
+	
 	public void carregarUsuario(Enfermeiro e) {
 		this.e = e;
 	}
@@ -366,6 +463,90 @@ public class CadastroPacientesController implements Initializable {
 	
 	public void iniciarModificacao(Paciente p) {
 		atualizar = true;
+		modificado = p;
+		
+		txtNome.setText(modificado.getNome());
+		txtSobrenome.setText(modificado.getSobrenome());
+		txtCPF.setText(formatarCpf(modificado.getCpf()));
+		cbSexo.getSelectionModel().select((modificado.getSexo() == 'F') ? 0 : 1);
+		spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) modificado.getPeso(), 0.1));
+		cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(modificado.getEstadoCivil()));
+		dpNasc.setValue(modificado.getDataNascimento());
+		dpEntrada.setValue(modificado.getDataEntrada().toLocalDate());
+		if (modificado.getDataSaida() != null) dpSaida.setValue(modificado.getDataSaida().toLocalDate());
+		txtEndereco.setText(modificado.getEndereco());
+		
+		List<Acompanhante> acompanhantes = new AcompanhanteDAO().findAllByPaciente(modificado);
+		Acompanhante a = null;
+		
+		for (int i = 0; i < acompanhantes.size(); i++) {
+			Paciente pAcompanhante = acompanhantes.get(i).getPaciente();
+			
+			if (pAcompanhante.getCpf() == modificado.getCpf()) {
+				a = acompanhantes.get(i);
+				break;
+			}
+		}
+		
+		if (a != null) {
+			txtNomeAcompanhante.setText(a.getNome());
+			txtCPFAcompanhante.setText(formatarCpf(a.getCpf()));
+			cbRelacao.getSelectionModel().select(obterRelacao(a.getRelacao()));
+		}
+	}
+	
+	private String formatarCpf(String cpf) {
+		StringBuilder sb = new StringBuilder(cpf);
+		
+		if (cpf.length() > 3) sb.insert(3, ".");
+		if (cpf.length() > 6) sb.insert(7, ".");
+		if (cpf.length() > 9) sb.insert(11, "-");
+		
+		return sb.toString();
+	}
+	
+	private int obterEstadoCivil(String estadoCivil) {
+		switch (estadoCivil) {
+			case "Solteiro":
+				return 0;
+				
+			case "Casado":
+				return 1;
+				
+			case "Separado":
+				return 2;
+				
+			case "Divorciado":
+				return 3;
+				
+			case "Viúvo":
+				return 4;
+		}
+		
+		return 0;
+	}
+	
+	private int obterRelacao(String relacao) {
+		switch (relacao) {
+			case "Parente":
+				return 0;
+			
+			case "Esposo(a)":
+				return 1;
+				
+			case "Filho(a)":
+				return 2;
+				
+			case "Amigo":
+				return 3;
+		}
+		
+		return 0;
+	}
+	
+	public void definirOrigem(boolean principal, boolean pacientes) {
+		this.perfilOrigemPrincipal = principal;
+		this.perfilOrigemPacientes = pacientes;
 	}
 	
 	private void fechar(Button source) {

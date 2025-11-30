@@ -84,6 +84,10 @@ public class Prontuario {
     public void setHistoricoSaude(HistoricoSaude historicoSaude) {
         this.historicoSaude = historicoSaude;
     }
+    
+    public final DateTimeFormatter getFormatoDataHora() {
+    	return FORMATO_DATAHORA;
+    }
 
     @Override
     public String toString() {

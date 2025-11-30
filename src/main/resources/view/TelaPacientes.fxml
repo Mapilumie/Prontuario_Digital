@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #E0F8E2;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prontuario.controller.PacientesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #E0F8E2;" xmlns="http://javafx.com/javafx/8.0.431" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prontuario.controller.PacientesController">
    <children>
       <AnchorPane prefHeight="72.0" prefWidth="700.0" style="-fx-background-color: #4C9292;">
          <children>
@@ -117,7 +117,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
+      <AnchorPane fx:id="avisoPacienteRemovido" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
          <children>
             <AnchorPane layoutX="176.0" layoutY="176.0" prefHeight="149.0" prefWidth="348.0" style="-fx-background-color: #C9CCCC; -fx-background-radius: 8px;">
                <children>
@@ -126,7 +126,7 @@
                         <Font name="Afacad Regular" size="20.0" />
                      </font>
                   </Label>
-                  <Button layoutX="149.0" layoutY="84.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" text="OK" textFill="WHITE">
+                  <Button fx:id="btnOkPacienteRemovido" layoutX="149.0" layoutY="84.0" mnemonicParsing="false" onAction="#ocultarPacienteRemovido" onMouseEntered="#hoverOkPacienteRemovido" onMouseExited="#exitOkPacienteRemovido" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" text="OK" textFill="WHITE">
                      <font>
                         <Font name="Afacad SemiBold" size="15.0" />
                      </font>

@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 import br.com.prontuario.app.App;
 import br.com.prontuario.dao.PacienteDAO;
+import br.com.prontuario.dao.ProntuarioDAO;
 import br.com.prontuario.model.Enfermeiro;
+import br.com.prontuario.model.FatorRisco;
+import br.com.prontuario.model.HistoricoSaude;
 import br.com.prontuario.model.Paciente;
+import br.com.prontuario.model.Prontuario;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +52,8 @@ public class PacientesController implements Initializable {
 	@FXML private ScrollPane barraPesquisa;
 	@FXML private VBox resPesquisa;
 	@FXML private Label lblVazio;
+	@FXML private AnchorPane avisoPacienteRemovido;
+	@FXML private Button btnOkPacienteRemovido;
 	@FXML private ImageView btnOpcoes;
 	@FXML private AnchorPane painelOpcoes;
 	@FXML private ComboBox<String> cbPesquisa;
@@ -153,12 +159,17 @@ public class PacientesController implements Initializable {
 				cpf.setTextFill(Color.BLACK);
 				cpf.setText(formatarCpf(p.getCpf()));
 				
+				Label motivoOncologico = new Label();
+				motivoOncologico.setFont(Font.font("Afacad", 14));
+				motivoOncologico.setTextFill(Color.BLACK);
+				motivoOncologico.setText(obterMotivoOncologico(p));
+				
 				Label endereco = new Label();
 				endereco.setFont(Font.font("Afacad", 14));
 				endereco.setTextFill(Color.BLACK);
 				endereco.setText(p.getEndereco());
 				
-				caixa.getChildren().addAll(nome, cpf, endereco);
+				caixa.getChildren().addAll(nome, cpf, motivoOncologico, endereco);
 				
 				caixa.setOnMouseEntered(event -> {
 					caixa.setStyle("-fx-background-color: #bfbfbf; -fx-background-radius: 8px");
@@ -170,6 +181,13 @@ public class PacientesController implements Initializable {
 				
 				caixa.setOnMouseClicked(event -> {
 					Paciente selecionado = p;
+					
+					try {
+						carregarPerfil(selecionado, event);
+					} 
+					catch (IOException e) {
+						e.printStackTrace();
+					}
 				});
 				
 				listaPacientes.getChildren().add(caixa);
@@ -233,6 +251,13 @@ public class PacientesController implements Initializable {
 				
 				caixa.setOnMouseClicked(event -> {
 					Paciente selecionado = p;
+					
+					try {
+						carregarPerfil(selecionado, event);
+					} 
+					catch (IOException e) {
+						e.printStackTrace();
+					}
 				});
 				
 				caixa.getChildren().add(lblNome);
@@ -280,6 +305,13 @@ public class PacientesController implements Initializable {
 			
 			caixa.setOnMouseClicked(event -> {
 				Paciente selecionado = p;
+				
+				try {
+					carregarPerfil(selecionado, event);
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
 			});
 			
 			caixa.getChildren().add(lblNome);
@@ -311,6 +343,25 @@ public class PacientesController implements Initializable {
 		tipoPesquisa = cbPesquisa.getSelectionModel().getSelectedIndex();
 	}
 	
+	private void carregarPerfil(Paciente p, MouseEvent event) throws IOException {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPerfilPaciente.fxml"));
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			PerfilPacienteController pP = loader.getController();
+			pP.carregarPaciente(p);
+			pP.carregarUsuario(e);
+			pP.origemTelaPacientes();
+			
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.setTitle("Prontuário Digital - Informações de " + p.getNome() + " " + p.getSobrenome());
+			stage.setScene(scene);
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 	private String formatarCpf(String cpf) {
 		StringBuilder sb = new StringBuilder(cpf);
 		
@@ -319,6 +370,25 @@ public class PacientesController implements Initializable {
 		if (cpf.length() > 9) sb.insert(11, "-");
 		
 		return sb.toString();
+	}
+	
+	private String obterMotivoOncologico(Paciente p) {
+		ProntuarioDAO prDAO = new ProntuarioDAO();
+		List<Prontuario> prontuarios = prDAO.findAll();
+		String motivo = "Nenhum motivo registrado";
+		
+		for (int i = 0; i < prontuarios.size(); i++) {
+			Prontuario pr = prontuarios.get(i);
+			HistoricoSaude h = pr.getHistoricoSaude();
+			FatorRisco fr = pr.getFatorRisco();
+			
+			if (h.getPaciente().getCpf().equals(p.getCpf()) && fr.getPaciente().getCpf().equals(p.getCpf())) {
+				motivo = pr.getMotivoOncologico();
+				break;
+			}
+		}
+		
+		return motivo;
 	}
 	
 	@FXML
@@ -439,6 +509,34 @@ public class PacientesController implements Initializable {
 	
 	public void carregarUsuario(Enfermeiro e) {
 		this.e = e;
+	}
+	
+	@FXML
+	private void hoverOkPacienteRemovido(MouseEvent event) {
+		btnOkPacienteRemovido.setStyle("-fx-background-color: #297373; -fx-background-radius: 5px");
+	}
+	
+	@FXML
+	private void exitOkPacienteRemovido(MouseEvent event) {
+		btnOkPacienteRemovido.setStyle("-fx-background-color: #4c9292; -fx-background-radius: 5px");
+	}
+	
+	@FXML
+	private void ocultarPacienteRemovido(ActionEvent event) {
+		avisoPacienteRemovido.setVisible(false);;
+	}
+	
+	public void notificarRemocao() {
+		Platform.runLater(() -> {
+			try {
+				Thread.sleep(200);
+			}
+			catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		});
+		
+		avisoPacienteRemovido.setVisible(true);
 	}
 	
 	private void fechar(Button source) {
