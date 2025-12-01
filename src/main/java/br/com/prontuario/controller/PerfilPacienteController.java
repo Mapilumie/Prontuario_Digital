@@ -931,6 +931,9 @@ public class PerfilPacienteController implements Initializable {
 			HistoricoSaude h = prontuarios.get(i).getHistoricoSaude();
 			FatorRisco fr = prontuarios.get(i).getFatorRisco();
 			
+			if (h == null || fr == null) continue;
+			if (h.getPaciente() == null || fr.getPaciente() == null) continue;
+			
 			if (h.getPaciente().getCpf().equals(p.getCpf()) && fr.getPaciente().getCpf().equals(p.getCpf())) {
 				prontuario = prontuarios.get(i);
 				break;

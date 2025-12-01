@@ -377,14 +377,22 @@ public class PacientesController implements Initializable {
 		List<Prontuario> prontuarios = prDAO.findAll();
 		String motivo = "Nenhum motivo registrado";
 		
-		for (int i = 0; i < prontuarios.size(); i++) {
-			Prontuario pr = prontuarios.get(i);
-			HistoricoSaude h = pr.getHistoricoSaude();
-			FatorRisco fr = pr.getFatorRisco();
-			
-			if (h.getPaciente().getCpf().equals(p.getCpf()) && fr.getPaciente().getCpf().equals(p.getCpf())) {
-				motivo = pr.getMotivoOncologico();
-				break;
+		if (p != null) {
+			for (int i = 0; i < prontuarios.size(); i++) {
+				Prontuario pr = prontuarios.get(i);
+				
+				if (pr == null) continue;
+				
+				HistoricoSaude h = pr.getHistoricoSaude();
+				FatorRisco fr = pr.getFatorRisco();
+				
+				if (h == null || fr == null) continue;
+		        if (h.getPaciente() == null || fr.getPaciente() == null) continue;
+				
+				if (h.getPaciente().getCpf().equals(p.getCpf()) && fr.getPaciente().getCpf().equals(p.getCpf())) {
+					motivo = pr.getMotivoOncologico();
+					break;
+				}
 			}
 		}
 		

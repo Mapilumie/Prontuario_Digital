@@ -34,6 +34,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 
 public class CadastroPacientesController implements Initializable {
 	// Componentes da interface
@@ -94,7 +95,9 @@ public class CadastroPacientesController implements Initializable {
 		ObservableList<String> relacao = FXCollections.observableArrayList("Parente", "Esposo(a)", "Filho(a)", "Amigo");
 		cbRelacao.setItems(relacao);
 		
-		spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, 10.0, 0.1));
+		SpinnerValueFactory.DoubleSpinnerValueFactory valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 300.0, 10.0, 0.1);
+		valueFactory.setConverter(new DoubleStringConverter());
+		spPeso.setValueFactory(valueFactory);
 		spPeso.setEditable(true);
 		
 		dpEntrada.setValue(LocalDate.now());
@@ -304,7 +307,7 @@ public class CadastroPacientesController implements Initializable {
 		if (perfilOrigemPacientes) pP.origemTelaPacientes();
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.setTitle("Prontuário Digital - Informações de " + p.getNome());
+		stage.setTitle("Prontuário Digital - Informações de " + p.getNome() + " " + p.getSobrenome());
 		stage.setScene(scene);
 	}
 	
@@ -468,12 +471,14 @@ public class CadastroPacientesController implements Initializable {
 		txtSobrenome.setText(modificado.getSobrenome());
 		txtCPF.setText(formatarCpf(modificado.getCpf()));
 		if (Character.valueOf(modificado.getSexo()) != null) cbSexo.getSelectionModel().select((modificado.getSexo() == 'F') ? 0 : 1);
-		if (modificado.getPeso() != null) spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) modificado.getPeso(), 0.1));
-		if (modificado.getEstadoCivil() != null || !modificado.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(modificado.getEstadoCivil()));
+		SpinnerValueFactory.DoubleSpinnerValueFactory valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) modificado.getPeso(), 0.1);
+		valueFactory.setConverter(new DoubleStringConverter());
+		if (modificado.getPeso() != null) spPeso.setValueFactory(valueFactory);
+		if (modificado.getEstadoCivil() != null && !modificado.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(modificado.getEstadoCivil()));
 		if (modificado.getDataNascimento() != null) dpNasc.setValue(modificado.getDataNascimento());
 		if (modificado.getDataEntrada() != null) dpEntrada.setValue(modificado.getDataEntrada().toLocalDate());
 		if (modificado.getDataSaida() != null) dpSaida.setValue(modificado.getDataSaida().toLocalDate());
-		txtEndereco.setText(modificado.getEndereco());
+		if (!modificado.getEndereco().isEmpty()) txtEndereco.setText(modificado.getEndereco());
 		
 		List<Acompanhante> acompanhantes = new AcompanhanteDAO().findAllByPaciente(modificado);
 		Acompanhante a = null;
@@ -490,7 +495,7 @@ public class CadastroPacientesController implements Initializable {
 		if (a != null) {
 			txtNomeAcompanhante.setText(a.getNome());
 			txtCPFAcompanhante.setText(formatarCpf(a.getCpf()));
-			if (a.getRelacao() != null || !a.getRelacao().isEmpty()) cbRelacao.getSelectionModel().select(obterRelacao(a.getRelacao()));
+			if (a.getRelacao() != null && !a.getRelacao().isEmpty()) cbRelacao.getSelectionModel().select(obterRelacao(a.getRelacao()));
 		}
 	}
 	

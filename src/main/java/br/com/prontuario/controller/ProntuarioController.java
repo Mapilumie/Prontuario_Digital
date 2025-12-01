@@ -833,11 +833,11 @@ public class ProntuarioController implements Initializable {
 		txtCPF.setText(formatarCpf(this.p.getCpf()));
 		if (Character.valueOf(this.p.getSexo()) != null) cbSexo.getSelectionModel().select((this.p.getSexo() == 'F') ? 0 : 1);
 		if (this.p.getPeso() != null) spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) this.p.getPeso(), 0.1));
-		if (this.p.getEstadoCivil() != null || !this.p.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(this.p.getEstadoCivil()));
+		if (this.p.getEstadoCivil() != null && !this.p.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(this.p.getEstadoCivil()));
 		if (this.p.getDataNascimento() != null) dpNasc.setValue(this.p.getDataNascimento());
 		if (this.p.getDataEntrada() != null) dpEntrada.setValue(this.p.getDataEntrada().toLocalDate());
 		if (this.p.getDataSaida() != null) dpSaida.setValue(this.p.getDataSaida().toLocalDate());
-		txtEndereco.setText(this.p.getEndereco());
+		if (this.p.getEndereco() != null && !this.p.getEndereco().isEmpty()) txtEndereco.setText(this.p.getEndereco());
 		
 		txtNome.setEditable(false);
 		txtSobrenome.setEditable(false);
@@ -853,13 +853,14 @@ public class ProntuarioController implements Initializable {
 	
 	public void iniciarModificacao(Prontuario pr) {
 		modificado = pr;
-		atualizar = true;
-		
 		idModificado = modificado.getId();
+		
 		FatorRisco fr = pr.getFatorRisco();
 		HistoricoSaude h = pr.getHistoricoSaude();
 		idFatorRisco = fr.getId();
 		idHistoricoSaude = h.getId();
+		
+		atualizar = true;
 		
 		ckbConsciencia.setSelected(fr.isAlteracaoConsciencia());
 		ckbMobilidade.setSelected(fr.isDeficitMobilidade());
@@ -901,7 +902,7 @@ public class ProntuarioController implements Initializable {
 		ckbForaRiscoQueda.setSelected(fr.isForaDeRisco());
 		
 		txtMotivoInternacao.setText(modificado.getMotivoOncologico());
-		txtObservacoes.setText(modificado.getObservacao());
+		if (modificado.getObservacao() != null && !modificado.getObservacao().isEmpty()) txtObservacoes.setText(modificado.getObservacao());
 	}
 	
 	private String formatarCpf(String cpf) {
