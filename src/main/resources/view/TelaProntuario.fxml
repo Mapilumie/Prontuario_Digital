@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #E0F8E2;" xmlns="http://javafx.com/javafx/8.0.431" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prontuario.controller.ProntuarioController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #E0F8E2;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.prontuario.controller.ProntuarioController">
    <children>
       <AnchorPane prefHeight="72.0" prefWidth="700.0" style="-fx-background-color: #4C9292;">
          <children>
@@ -46,7 +46,7 @@
                   <Font name="Afacad SemiBold" size="30.0" />
                </font>
             </Label>
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="15.0" layoutY="58.0" prefHeight="250.0" prefWidth="554.0" stylesheets="@../css/telaProntuário.css" vvalue="1.0">
+            <ScrollPane fx:id="painelDados" fitToWidth="true" hbarPolicy="NEVER" layoutX="15.0" layoutY="58.0" prefHeight="250.0" prefWidth="554.0" stylesheets="@../css/telaProntuário.css" vvalue="0.25">
                <content>
                   <VBox prefHeight="200.0" prefWidth="569.0" spacing="10.0">
                      <children>
@@ -673,6 +673,27 @@
                      </font>
                   </Label>
                   <Button fx:id="btnOkCaminhoProntuario" layoutX="149.0" layoutY="95.0" mnemonicParsing="false" onAction="#ocultarCaminhoProntuario" onMouseEntered="#hoverOkCaminhoProntuario" onMouseExited="#exitOkCaminhoProntuario" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" styleClass="botao" stylesheets="@../css/inicio.css" text="OK" textFill="WHITE">
+                     <font>
+                        <Font name="Afacad SemiBold" size="15.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="avisoMotivoOncologicoVazio" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
+         <children>
+            <AnchorPane layoutX="176.0" layoutY="176.0" prefHeight="149.0" prefWidth="348.0" style="-fx-background-color: #C9CCCC; -fx-background-radius: 8px;">
+               <children>
+                  <Label layoutX="67.0" layoutY="25.0" prefHeight="60.0" prefWidth="214.0" styleClass="labels" stylesheets="@../css/inicio.css" text="Informe o motivo de internação deste paciente." wrapText="true">
+                     <font>
+                        <Font name="Afacad Regular" size="20.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnOkMotivoOncologicoVazio" layoutX="149.0" layoutY="95.0" mnemonicParsing="false" onAction="#ocultarMotivoOncologicoVazio" onMouseEntered="#hoverOkMotivoOncologicoVazio" onMouseExited="#exitOkMotivoOncologicoVazio" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" styleClass="botao" stylesheets="@../css/inicio.css" text="OK" textFill="WHITE">
                      <font>
                         <Font name="Afacad SemiBold" size="15.0" />
                      </font>

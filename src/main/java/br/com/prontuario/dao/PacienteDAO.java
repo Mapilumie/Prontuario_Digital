@@ -126,7 +126,7 @@ public class PacienteDAO implements IPacienteDAO {
 
     @Override
     public List<Paciente> findAllByNomeSobrenome(String nomeSobrenome) {
-        String sql = "SELECT * FROM paciente WHERE (nome || ' ' || sobrenome) LIKE ?";
+        String sql = "SELECT * FROM paciente WHERE (LOWER(nome) || ' ' || LOWER(sobrenome)) LIKE LOWER(?)";
         PreparedStatement pst = null;
         Connection conexao = null;
         ResultSet rs = null;

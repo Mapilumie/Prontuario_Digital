@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import br.com.prontuario.app.App;
 import br.com.prontuario.dao.AcompanhanteDAO;
 import br.com.prontuario.dao.CuidaDAO;
@@ -468,11 +467,11 @@ public class CadastroPacientesController implements Initializable {
 		txtNome.setText(modificado.getNome());
 		txtSobrenome.setText(modificado.getSobrenome());
 		txtCPF.setText(formatarCpf(modificado.getCpf()));
-		cbSexo.getSelectionModel().select((modificado.getSexo() == 'F') ? 0 : 1);
-		spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) modificado.getPeso(), 0.1));
-		cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(modificado.getEstadoCivil()));
-		dpNasc.setValue(modificado.getDataNascimento());
-		dpEntrada.setValue(modificado.getDataEntrada().toLocalDate());
+		if (Character.valueOf(modificado.getSexo()) != null) cbSexo.getSelectionModel().select((modificado.getSexo() == 'F') ? 0 : 1);
+		if (modificado.getPeso() != null) spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) modificado.getPeso(), 0.1));
+		if (modificado.getEstadoCivil() != null || !modificado.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(modificado.getEstadoCivil()));
+		if (modificado.getDataNascimento() != null) dpNasc.setValue(modificado.getDataNascimento());
+		if (modificado.getDataEntrada() != null) dpEntrada.setValue(modificado.getDataEntrada().toLocalDate());
 		if (modificado.getDataSaida() != null) dpSaida.setValue(modificado.getDataSaida().toLocalDate());
 		txtEndereco.setText(modificado.getEndereco());
 		
@@ -491,7 +490,7 @@ public class CadastroPacientesController implements Initializable {
 		if (a != null) {
 			txtNomeAcompanhante.setText(a.getNome());
 			txtCPFAcompanhante.setText(formatarCpf(a.getCpf()));
-			cbRelacao.getSelectionModel().select(obterRelacao(a.getRelacao()));
+			if (a.getRelacao() != null || !a.getRelacao().isEmpty()) cbRelacao.getSelectionModel().select(obterRelacao(a.getRelacao()));
 		}
 	}
 	

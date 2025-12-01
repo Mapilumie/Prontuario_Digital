@@ -44,10 +44,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -56,6 +58,7 @@ import javafx.stage.Stage;
 
 public class ProntuarioController implements Initializable {
 	// Componentes da interface
+	@FXML private ScrollPane painelDados;
 	@FXML private TextField txtNome;
 	@FXML private TextField txtSobrenome;
 	@FXML private TextField txtCPF;
@@ -119,6 +122,8 @@ public class ProntuarioController implements Initializable {
 	@FXML private Button btnNaoSairPrograma;
 	@FXML private AnchorPane avisoCaminhoProntuario;
 	@FXML private Button btnOkCaminhoProntuario;
+	@FXML private AnchorPane avisoMotivoOncologicoVazio;
+	@FXML private Button btnOkMotivoOncologicoVazio;
 	
 	// Variaveis e instancias
 	private long idModificado;
@@ -127,6 +132,7 @@ public class ProntuarioController implements Initializable {
 	private Prontuario modificado;
 	private Enfermeiro e;
 	private Paciente p;
+	private boolean motivoOncologicoVazio;
 	private boolean atualizar;
 	private boolean exibirOpcoes;
 	private boolean veioDaTelaPrincipal;
@@ -181,6 +187,29 @@ public class ProntuarioController implements Initializable {
 	            }
 			}
 		});
+		
+		txtMotivoInternacao.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (motivoOncologicoVazio && !newValue.isEmpty()) {
+				txtMotivoInternacao.setStyle("-fx-background-color: #fffff; -fx-background-radius: 8px");
+				motivoOncologicoVazio = false;
+			}
+		});
+		
+		txtMotivoInternacao.setTextFormatter(new TextFormatter<String>(change -> {
+			if (change.getControlNewText().length() > 20) {
+				return null;
+			}
+			
+			return change;
+		}));
+		
+		txtObservacoes.setTextFormatter(new TextFormatter<String>(change -> {
+			if (change.getControlText().length() > 300) {
+				return null;
+			}
+			
+			return change;
+		}));
 	}
 	
 	@FXML
@@ -351,79 +380,87 @@ public class ProntuarioController implements Initializable {
 	
 	@FXML
 	private void finalizar(ActionEvent event) {
-		String motivoOncologico = txtMotivoInternacao.getText();
-		String observacoes = txtObservacoes.getText();
-		
-		boolean consciencia = ckbConsciencia.isSelected();
-		boolean mobilidade = ckbMobilidade.isSelected();
-		boolean nutricional = ckbNutricional.isSelected();
-		boolean peleUmida = ckbPeleUmida.isSelected();
-		boolean cisalhamento = ckbCisalhamento.isSelected();
-		boolean limitacoesMobilidade = ckbLimitacoesMobilidade.isSelected();
-		
-		boolean turgorPele = ckbTurgorPele.isSelected();
-		boolean imunodepressao = ckbImunodepressao.isSelected();
-		boolean fragilidadeCapilar = ckbFragilidadeCapilar.isSelected();
-		boolean quimioterapia = ckbQuimioterapia.isSelected();
-		boolean medicacoesHiperosmolares = ckbMedicacoesHiperosmolares.isSelected();
-		
-		boolean convulsoes = ckbConvulsoes.isSelected();
-		boolean delirium = ckbDelirium.isSelected();
-		boolean visaoAudicao = ckbVisaoAudicao.isSelected();
-		boolean hipotensao = ckbHipotensao.isSelected();
-		boolean alcoolDrogas = ckbAlcoolDrogas.isSelected();
-		
-		boolean criancaIdosoGestante = ckbCriancaIdoso.isSelected() && ckbCriancaIdosoGestante.isSelected();
-		boolean foraRisco = ckbForaRiscoPele.isSelected() && ckbForaRiscoFlebite.isSelected() && ckbForaRiscoQueda.isSelected();
-		
-		boolean doencasInfectocontagiosas = ckbDoencasInfectocontagiosas.isSelected();
-		boolean dislipidemia = ckbDislipidemia.isSelected();
-		boolean etilismo = ckbEtilismo.isSelected();
-		boolean hipertensao = ckbHipertensao.isSelected();
-		boolean transfusaoSanguinea = ckbTransfusaoSanguinea.isSelected();
-		boolean viroseInfancia = ckbViroseInfancia.isSelected();
-		boolean tabagismo = ckbTabagismo.isSelected();
-		boolean neoplasia = ckbNeoplasia.isSelected();
-		boolean doencaAutoimune = ckbDoencaAutoimune.isSelected();
-		boolean doencaRespiratoria = ckbDoencaRespiratoria.isSelected();
-		boolean doencaCardiovascular = ckbDoencaCardiovascular.isSelected();
-		boolean diabetes = ckbDiabetes.isSelected();
-		boolean doencaRenal = ckbDoencaRenal.isSelected();
-		
-		FatorRisco fr = new FatorRisco(consciencia, mobilidade, nutricional, peleUmida, cisalhamento, limitacoesMobilidade, criancaIdosoGestante,
-				        turgorPele, imunodepressao, fragilidadeCapilar, quimioterapia, medicacoesHiperosmolares, convulsoes, delirium, visaoAudicao,
-				        hipotensao, alcoolDrogas, foraRisco, p);
-		HistoricoSaude h = new HistoricoSaude(tabagismo, neoplasia, doencaAutoimune, doencaRespiratoria, doencaCardiovascular, diabetes, 
-				           doencaRenal, doencasInfectocontagiosas, dislipidemia, etilismo, hipertensao, transfusaoSanguinea, 
-				           viroseInfancia, p);
-		
-		if (atualizar && idFatorRisco != 0) fr.setId(idFatorRisco);
-		if (atualizar && idHistoricoSaude != 0) h.setId(idHistoricoSaude);
-		
-		ProntuarioDAO prDAO = new ProntuarioDAO();
-		FatorRiscoDAO frDAO = new FatorRiscoDAO();
-		HistoricoSaudeDAO hDAO = new HistoricoSaudeDAO();
-		
-		if (!atualizar) {
-			frDAO.save(fr);
-			hDAO.save(h);
+		if (!txtMotivoInternacao.getText().isEmpty()) {
+			String motivoOncologico = txtMotivoInternacao.getText();
+			String observacoes = txtObservacoes.getText();
+			boolean consciencia = ckbConsciencia.isSelected();
+			boolean mobilidade = ckbMobilidade.isSelected();
+			boolean nutricional = ckbNutricional.isSelected();
+			boolean peleUmida = ckbPeleUmida.isSelected();
+			boolean cisalhamento = ckbCisalhamento.isSelected();
+			boolean limitacoesMobilidade = ckbLimitacoesMobilidade.isSelected();
+			
+			boolean turgorPele = ckbTurgorPele.isSelected();
+			boolean imunodepressao = ckbImunodepressao.isSelected();
+			boolean fragilidadeCapilar = ckbFragilidadeCapilar.isSelected();
+			boolean quimioterapia = ckbQuimioterapia.isSelected();
+			boolean medicacoesHiperosmolares = ckbMedicacoesHiperosmolares.isSelected();
+			
+			boolean convulsoes = ckbConvulsoes.isSelected();
+			boolean delirium = ckbDelirium.isSelected();
+			boolean visaoAudicao = ckbVisaoAudicao.isSelected();
+			boolean hipotensao = ckbHipotensao.isSelected();
+			boolean alcoolDrogas = ckbAlcoolDrogas.isSelected();
+			
+			boolean criancaIdosoGestante = ckbCriancaIdoso.isSelected() && ckbCriancaIdosoGestante.isSelected();
+			boolean foraRisco = ckbForaRiscoPele.isSelected() && ckbForaRiscoFlebite.isSelected() && ckbForaRiscoQueda.isSelected();
+			
+			boolean doencasInfectocontagiosas = ckbDoencasInfectocontagiosas.isSelected();
+			boolean dislipidemia = ckbDislipidemia.isSelected();
+			boolean etilismo = ckbEtilismo.isSelected();
+			boolean hipertensao = ckbHipertensao.isSelected();
+			boolean transfusaoSanguinea = ckbTransfusaoSanguinea.isSelected();
+			boolean viroseInfancia = ckbViroseInfancia.isSelected();
+			boolean tabagismo = ckbTabagismo.isSelected();
+			boolean neoplasia = ckbNeoplasia.isSelected();
+			boolean doencaAutoimune = ckbDoencaAutoimune.isSelected();
+			boolean doencaRespiratoria = ckbDoencaRespiratoria.isSelected();
+			boolean doencaCardiovascular = ckbDoencaCardiovascular.isSelected();
+			boolean diabetes = ckbDiabetes.isSelected();
+			boolean doencaRenal = ckbDoencaRenal.isSelected();
+			
+			FatorRisco fr = new FatorRisco(consciencia, mobilidade, nutricional, peleUmida, cisalhamento,
+					limitacoesMobilidade, criancaIdosoGestante, turgorPele, imunodepressao, fragilidadeCapilar,
+					quimioterapia, medicacoesHiperosmolares, convulsoes, delirium, visaoAudicao, hipotensao,
+					alcoolDrogas, foraRisco, p);
+			HistoricoSaude h = new HistoricoSaude(tabagismo, neoplasia, doencaAutoimune, doencaRespiratoria,
+					doencaCardiovascular, diabetes, doencaRenal, doencasInfectocontagiosas, dislipidemia, etilismo,
+					hipertensao, transfusaoSanguinea, viroseInfancia, p);
+			
+			if (atualizar && idFatorRisco != 0) fr.setId(idFatorRisco);
+			if (atualizar && idHistoricoSaude != 0) h.setId(idHistoricoSaude);
+			
+			ProntuarioDAO prDAO = new ProntuarioDAO();
+			FatorRiscoDAO frDAO = new FatorRiscoDAO();
+			HistoricoSaudeDAO hDAO = new HistoricoSaudeDAO();
+			
+			if (!atualizar) {
+				frDAO.save(fr);
+				hDAO.save(h);
+			} 
+			else {
+				frDAO.update(fr);
+				hDAO.update(h);
+			}
+			Prontuario pr = new Prontuario(observacoes, motivoOncologico, e, frDAO.findByPaciente(p),
+					hDAO.findByPaciente(p));
+			if (atualizar && idModificado != 0) pr.setId(idModificado);
+			
+			if (!atualizar) {
+				prDAO.save(pr);
+			} 
+			else {
+				prDAO.update(pr);
+			}
+			
+			gerarProntuario(pr, event);
 		}
 		else {
-			frDAO.update(fr);
-			hDAO.update(h);
+			motivoOncologicoVazio = txtMotivoInternacao.getText().isEmpty();
+			if (motivoOncologicoVazio) txtMotivoInternacao.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-color: #f3673a; -fx-border-radius: 8px; -fx-border-width: 2px");
+			painelDados.setVvalue(0.25);
+			avisoMotivoOncologicoVazio.setVisible(true);
 		}
-		
-		Prontuario pr = new Prontuario(observacoes, motivoOncologico, e, frDAO.findByPaciente(p), hDAO.findByPaciente(p));
-		if (atualizar && idModificado != 0) pr.setId(idModificado);
-		
-		if (!atualizar) {
-			prDAO.save(pr);
-		}
-		else {
-			prDAO.update(pr);
-		}
-		
-		gerarProntuario(pr, event);
 	}
 	
 	private void gerarProntuario(Prontuario pr, ActionEvent event) {
@@ -633,6 +670,21 @@ public class ProntuarioController implements Initializable {
 	}
 	
 	@FXML
+	private void hoverOkMotivoOncologicoVazio(MouseEvent event) {
+		btnOkMotivoOncologicoVazio.setStyle("-fx-background-color: #297373; -fx-background-radius: 5px");
+	}
+	
+	@FXML
+	private void exitOkMotivoOncologicoVazio(MouseEvent event) {
+		btnOkMotivoOncologicoVazio.setStyle("-fx-background-color: #4c9292; -fx-background-radius: 5px");
+	}
+	
+	@FXML
+	private void ocultarMotivoOncologicoVazio(ActionEvent event) {
+		avisoMotivoOncologicoVazio.setVisible(false);
+	}
+	
+	@FXML
 	private void hoverOkCaminhoProntuario(MouseEvent event) {
 		btnOkCaminhoProntuario.setStyle("-fx-background-color: #297373; -fx-background-radius: 5px");
 	}
@@ -779,11 +831,11 @@ public class ProntuarioController implements Initializable {
 		txtNome.setText(this.p.getNome());
 		txtSobrenome.setText(this.p.getSobrenome());
 		txtCPF.setText(formatarCpf(this.p.getCpf()));
-		cbSexo.getSelectionModel().select((this.p.getSexo() == 'F') ? 0 : 1);
-		spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) this.p.getPeso(), 0.1));
-		cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(this.p.getEstadoCivil()));
-		dpNasc.setValue(this.p.getDataNascimento());
-		dpEntrada.setValue(this.p.getDataEntrada().toLocalDate());
+		if (Character.valueOf(this.p.getSexo()) != null) cbSexo.getSelectionModel().select((this.p.getSexo() == 'F') ? 0 : 1);
+		if (this.p.getPeso() != null) spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) this.p.getPeso(), 0.1));
+		if (this.p.getEstadoCivil() != null || !this.p.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(this.p.getEstadoCivil()));
+		if (this.p.getDataNascimento() != null) dpNasc.setValue(this.p.getDataNascimento());
+		if (this.p.getDataEntrada() != null) dpEntrada.setValue(this.p.getDataEntrada().toLocalDate());
 		if (this.p.getDataSaida() != null) dpSaida.setValue(this.p.getDataSaida().toLocalDate());
 		txtEndereco.setText(this.p.getEndereco());
 		

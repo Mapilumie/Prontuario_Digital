@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -15,8 +16,8 @@ public class Main extends Application {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		
-		// Image icone = new Image(getClass().getResource("").toExternalForm());
-		// stage.getIcons().add(icone);
+		Image icone = new Image(getClass().getResource("/images/prdigitalicon.png").toExternalForm());
+		stage.getIcons().add(icone);
 		
 		stage.setTitle("Prontuário Digital");
 		stage.setScene(scene);

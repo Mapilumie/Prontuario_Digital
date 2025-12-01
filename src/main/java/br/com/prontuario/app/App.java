@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -23,8 +24,8 @@ public class App extends Application {
 		Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-SemiBold.ttf"), 18);
 		Font.loadFont(getClass().getResourceAsStream("/fonts/Roboto-VariableFont_wdth,wght.ttf"), 18);
 		
-		// Image icone = new Image(getClass().getResource("").toExternalForm());
-		// stage.getIcons().add(icone);
+		Image icone = new Image(getClass().getResource("/images/prdigitalicon.png").toExternalForm());
+		stage.getIcons().add(icone);
 		
 		stage.setTitle("Prontuário Digital - Login");
 		stage.setScene(scene);
