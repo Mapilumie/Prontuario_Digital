@@ -554,30 +554,30 @@ public class PerfilPacienteController implements Initializable {
 			
 			HBox sexo = gerarInformacao();
 			Label stSexo = gerarSubTitulo("Sexo:");
-			Label pSexo = gerarDado((p.getSexo() == 'F') ? "Feminino" : "Masculino");
+			Label pSexo = gerarDado((Character.valueOf(p.getSexo()) != null) ? ((p.getSexo() == 'F') ? "Feminino" : "Masculino") : "N/A");
 			sexo.getChildren().setAll(stSexo, pSexo);
 			
 			HBox peso = gerarInformacao();
 			Label stPeso = gerarSubTitulo("Peso:");
-			Label pPeso = gerarDado(Double.toString(p.getPeso()) + " kg");
+			Label pPeso = gerarDado((p.getPeso() != null) ? Double.toString(p.getPeso()) + " kg" : "N/A");
 			peso.getChildren().setAll(stPeso, pPeso);
 			
 			HBox estadoCivil = gerarInformacao();
 			Label stEstadoCivil = gerarSubTitulo("Estado civil:");
-			Label pEstadoCivil = gerarDado(p.getEstadoCivil());
+			Label pEstadoCivil = gerarDado((p.getEstadoCivil() != null && !p.getEstadoCivil().isEmpty()) ? p.getEstadoCivil() : "N/A");
 			estadoCivil.getChildren().setAll(stEstadoCivil, pEstadoCivil);
 			
 			HBox dataNascimento = gerarInformacao();
 			Label stDataNascimento = gerarSubTitulo("Data de nascimento:");
-			Label pDataNascimento = gerarDado(p.getDataNascimento().format(p.getFormatoData()));
+			Label pDataNascimento = gerarDado((p.getDataNascimento() != null) ? p.getDataNascimento().format(p.getFormatoData()) : "N/A");
 			dataNascimento.getChildren().setAll(stDataNascimento, pDataNascimento);
 			
 			HBox dataEntrada = gerarInformacao();
 			Label stDataEntrada = gerarSubTitulo("Data de entrada:");
-			Label pDataEntrada = gerarDado(p.getDataEntrada().format(p.getFormatoDataHora()));
+			Label pDataEntrada = gerarDado((p.getDataEntrada() != null) ? p.getDataEntrada().format(p.getFormatoDataHora()) : "N/A");
 			dataEntrada.getChildren().setAll(stDataEntrada, pDataEntrada);
 			
-			String dSaida = (p.getDataSaida() != null) ? p.getDataSaida().format(p.getFormatoDataHora()) : "Nenhuma data registrada no momento";
+			String dSaida = (p.getDataSaida() != null) ? p.getDataSaida().format(p.getFormatoDataHora()) : "N/A";
 			HBox dataSaida = gerarInformacao();
 			Label stDataSaida = gerarSubTitulo("Data de saída:");
 			Label pDataSaida = gerarDado(dSaida);
@@ -585,12 +585,12 @@ public class PerfilPacienteController implements Initializable {
 			
 			HBox idade = gerarInformacao();
 			Label stIdade = gerarSubTitulo("Idade:");
-			Label pIdade = gerarDado(Integer.toString(Period.between(p.getDataNascimento(), LocalDate.now()).getYears()));
+			Label pIdade = gerarDado((p.getDataNascimento() != null) ? Integer.toString(Period.between(p.getDataNascimento(), LocalDate.now()).getYears()) : "N/A");
 			idade.getChildren().setAll(stIdade, pIdade);
 			
 			HBox endereco = gerarInformacao();
 			Label stEndereco = gerarSubTitulo("Endereço:");
-			Label pEndereco = gerarDado(p.getEndereco());
+			Label pEndereco = gerarDado((p.getEndereco() != null && !p.getEndereco().isEmpty()) ? p.getEndereco() : "N/A");
 			endereco.getChildren().setAll(stEndereco, pEndereco);
 			
 			infoProntuario.getChildren().addAll(informacoesPaciente, nome, cpf, sexo, peso, estadoCivil, dataNascimento, idade, dataEntrada, dataSaida, endereco);
@@ -612,7 +612,7 @@ public class PerfilPacienteController implements Initializable {
 				
 				HBox relacao = gerarInformacao();
 				Label stRelacao = gerarSubTitulo("Relação com o paciente:");
-				Label pRelacao = gerarDado(a.getRelacao());
+				Label pRelacao = gerarDado((a.getRelacao() != null && !a.getRelacao().isEmpty()) ? a.getRelacao() : "N/A");
 				relacao.getChildren().setAll(stRelacao, pRelacao);
 				
 				infoProntuario.getChildren().addAll(informacoesAcompanhante, nomeAcompanhante, cpfAcompanhante, relacao);
@@ -813,12 +813,12 @@ public class PerfilPacienteController implements Initializable {
 			
 			HBox dataEmissao = gerarInformacao();
 			Label stDataEmissao = gerarSubTitulo("Data de emissão:");
-			Label pDataEmissao = gerarDado(pr.getDataEmissao().format(pr.getFormatoDataHora()));
+			Label pDataEmissao = gerarDado((pr.getDataEmissao() != null) ? pr.getDataEmissao().format(pr.getFormatoDataHora()) : "N/A");
 			dataEmissao.getChildren().setAll(stDataEmissao, pDataEmissao);
 			
 			HBox observacoes = gerarInformacao();
 			Label stObservacoes = gerarSubTitulo("Observações:");
-			Label pObservacoes = gerarDado(pr.getObservacao());
+			Label pObservacoes = gerarDado((pr.getObservacao() != null && !pr.getObservacao().isEmpty()) ? pr.getObservacao() : "N/A");
 			observacoes.getChildren().setAll(stObservacoes, pObservacoes);
 			
 			infoProntuario.getChildren().addAll(informacoesProntuario, enfermeiro, dataEmissao, motivoInternacao, observacoes);
