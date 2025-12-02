@@ -78,6 +78,9 @@ public class CadastroPacientesController implements Initializable {
 	private boolean nomeVazio;
 	private boolean sobrenomeVazio;
 	private boolean cpfVazio;
+	private boolean digitouAcompanhante;
+	private boolean nomeAcompanhanteVazio;
+	private boolean cpfAcompanhanteVazio;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -173,6 +176,43 @@ public class CadastroPacientesController implements Initializable {
 				cpfVazio = false;
 			}
 		});
+		
+		txtNomeAcompanhante.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (!digitouAcompanhante && !newValue.isEmpty() && txtCPFAcompanhante.getText().isEmpty()) {
+				digitouAcompanhante = true;
+			}
+			else if (digitouAcompanhante && newValue.isEmpty() && txtCPFAcompanhante.getText().isEmpty()) {
+				digitouAcompanhante = false;
+			}
+			
+			if (digitouAcompanhante && nomeAcompanhanteVazio && !newValue.isEmpty()) {
+				txtNomeAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
+				nomeAcompanhanteVazio = false;
+			}
+		});
+		
+		txtCPFAcompanhante.textProperty().addListener((obs, oldValue, newValue) -> {
+			if (!digitouAcompanhante && !newValue.isEmpty() && !txtNomeAcompanhante.getText().isEmpty()) {
+				digitouAcompanhante = true;
+			}
+			else if (digitouAcompanhante && newValue.isEmpty() && txtNomeAcompanhante.getText().isEmpty()) {
+				digitouAcompanhante = false;
+			}
+			
+			if (digitouAcompanhante && cpfAcompanhanteVazio && !newValue.isEmpty()) {
+				txtCPFAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
+				cpfAcompanhanteVazio = false;
+			}
+		});
+		
+		cbRelacao.valueProperty().addListener((obs, oldValue, newValue) -> {
+			if (newValue != null && (txtNomeAcompanhante.getText().isEmpty() || txtCPFAcompanhante.getText().isEmpty())) {
+				digitouAcompanhante = true;
+			}
+			else if (newValue == null && (txtNomeAcompanhante.getText().isEmpty() && txtCPFAcompanhante.getText().isEmpty())) {
+				digitouAcompanhante = false;
+			}
+		});;
 	}
 	
 	@FXML
@@ -272,10 +312,14 @@ public class CadastroPacientesController implements Initializable {
 			nomeVazio = txtNome.getText().isEmpty();
 			sobrenomeVazio = txtSobrenome.getText().isEmpty();
 			cpfVazio = txtCPF.getText().isEmpty();
+			if (digitouAcompanhante) nomeAcompanhanteVazio = txtNomeAcompanhante.getText().isEmpty();
+			if (digitouAcompanhante) cpfAcompanhanteVazio = txtCPFAcompanhante.getText().isEmpty();
 			
 			if (nomeVazio) txtNome.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
 			if (sobrenomeVazio) txtSobrenome.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
 			if (cpfVazio) txtCPF.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
+			if (digitouAcompanhante && nomeAcompanhanteVazio) txtNomeAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
+			if (digitouAcompanhante && cpfAcompanhanteVazio) txtCPFAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
 			
 			avisoCamposObrigatorios.setVisible(true);
 		}
@@ -312,7 +356,7 @@ public class CadastroPacientesController implements Initializable {
 	}
 	
 	private boolean verificarCamposObrigatorios() {
-		if (txtNome.getText().isEmpty() || txtSobrenome.getText().isEmpty() || txtCPF.getText().isEmpty()) {
+		if ((txtNome.getText().isEmpty() || txtSobrenome.getText().isEmpty() || txtCPF.getText().isEmpty()) || acompanhanteVazio()) {
 			return false;
 		}
 		
@@ -320,11 +364,19 @@ public class CadastroPacientesController implements Initializable {
 	}
 	
 	private boolean verificarAcompanhante() {
-		if (txtCPFAcompanhante.getText().isEmpty() || txtNomeAcompanhante.getText().isEmpty() || cbRelacao.getValue() == null) {
+		if (txtCPFAcompanhante.getText().isEmpty() && txtNomeAcompanhante.getText().isEmpty() && cbRelacao.getValue() == null) {
 			return false;
 		}
 		
 		return true;
+	}
+	
+	private boolean acompanhanteVazio() {
+		if (digitouAcompanhante && (txtNomeAcompanhante.getText().isEmpty() || txtCPFAcompanhante.getText().isEmpty())) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public void prepararCadastro() {
@@ -471,9 +523,14 @@ public class CadastroPacientesController implements Initializable {
 		txtSobrenome.setText(modificado.getSobrenome());
 		txtCPF.setText(formatarCpf(modificado.getCpf()));
 		if (Character.valueOf(modificado.getSexo()) != null) cbSexo.getSelectionModel().select((modificado.getSexo() == 'F') ? 0 : 1);
-		SpinnerValueFactory.DoubleSpinnerValueFactory valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) modificado.getPeso(), 0.1);
-		valueFactory.setConverter(new DoubleStringConverter());
-		if (modificado.getPeso() != null) spPeso.setValueFactory(valueFactory);
+		
+		if (modificado.getPeso() != null && modificado.getPeso() != 0.0) {
+			SpinnerValueFactory.DoubleSpinnerValueFactory valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(
+					0.0, 300.0, (double) modificado.getPeso(), 0.1);
+			valueFactory.setConverter(new DoubleStringConverter());
+			spPeso.setValueFactory(valueFactory);
+		}
+		
 		if (modificado.getEstadoCivil() != null && !modificado.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(modificado.getEstadoCivil()));
 		if (modificado.getDataNascimento() != null) dpNasc.setValue(modificado.getDataNascimento());
 		if (modificado.getDataEntrada() != null) dpEntrada.setValue(modificado.getDataEntrada().toLocalDate());

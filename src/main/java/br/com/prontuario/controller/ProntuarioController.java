@@ -55,6 +55,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 
 public class ProntuarioController implements Initializable {
 	// Componentes da interface
@@ -832,7 +833,14 @@ public class ProntuarioController implements Initializable {
 		txtSobrenome.setText(this.p.getSobrenome());
 		txtCPF.setText(formatarCpf(this.p.getCpf()));
 		if (Character.valueOf(this.p.getSexo()) != null) cbSexo.getSelectionModel().select((this.p.getSexo() == 'F') ? 0 : 1);
-		if (this.p.getPeso() != null) spPeso.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0.0, 100.0, (double) this.p.getPeso(), 0.1));
+		
+		if (this.p.getPeso() != null && this.p.getPeso() != 0.0) {
+			SpinnerValueFactory.DoubleSpinnerValueFactory valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(
+					0.0, 300.0, (double) this.p.getPeso(), 0.1);
+			valueFactory.setConverter(new DoubleStringConverter());
+			spPeso.setValueFactory(valueFactory);
+		}
+		
 		if (this.p.getEstadoCivil() != null && !this.p.getEstadoCivil().isEmpty()) cbEstadoCivil.getSelectionModel().select(obterEstadoCivil(this.p.getEstadoCivil()));
 		if (this.p.getDataNascimento() != null) dpNasc.setValue(this.p.getDataNascimento());
 		if (this.p.getDataEntrada() != null) dpEntrada.setValue(this.p.getDataEntrada().toLocalDate());
