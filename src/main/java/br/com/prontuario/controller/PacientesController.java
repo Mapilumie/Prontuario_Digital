@@ -135,13 +135,11 @@ public class PacientesController implements Initializable {
 		PacienteDAO dao = new PacienteDAO();
 		List<Paciente> pacientes = dao.findAll();
 		
-		if (pacientes.size() != 0) {
+		if (!pacientes.isEmpty()) {
 			painelPacientes.setVisible(true);
 			lblNenhum.setVisible(false);
 			
-			for (int i = 0; i < pacientes.size(); i++) {
-				Paciente p = pacientes.get(i);
-				
+			for (Paciente p : pacientes) {
 				VBox caixa = new VBox();
 				caixa.setStyle("-fx-background-color: #d9d9d9; -fx-background-radius: 8px");
 				caixa.setPrefWidth(257);
@@ -180,7 +178,7 @@ public class PacientesController implements Initializable {
 				});
 				
 				caixa.setOnMouseClicked(event -> {
-					Paciente selecionado = p;
+					final Paciente selecionado = p;
 					
 					try {
 						carregarPerfil(selecionado, event);
