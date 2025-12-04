@@ -192,7 +192,7 @@ public class CadastroPacientesController implements Initializable {
 		});
 		
 		txtCPFAcompanhante.textProperty().addListener((obs, oldValue, newValue) -> {
-			if (!digitouAcompanhante && !newValue.isEmpty() && !txtNomeAcompanhante.getText().isEmpty()) {
+			if (!digitouAcompanhante && !newValue.isEmpty() && txtNomeAcompanhante.getText().isEmpty()) {
 				digitouAcompanhante = true;
 			}
 			else if (digitouAcompanhante && newValue.isEmpty() && txtNomeAcompanhante.getText().isEmpty()) {
