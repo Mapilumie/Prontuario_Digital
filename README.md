@@ -2,7 +2,7 @@
 
 ## Descrição do projeto 📄  
 
-O projeto foi desenvolvido para a matéria de Banco de Dados I e Engenharia de Software da Universidade Estadual da Bahia (UESB), no curso de Ciência da computação. O objetivo era que ao escolher um tema relevante, fosse aplicado conceitos de Engenharia de Software para estruturar todo o processo de criação da aplicação, além disso também foi proposto a implementação de conceitos de banco de dados para persistir as informações do aplicativo. 
+O projeto foi desenvolvido para a matéria de Banco de Dados I e Engenharia de Software da Universidade Estadual da Bahia (UESB), no curso de Ciência da Computação. O objetivo era que ao escolher um tema relevante, fosse aplicado conceitos de Engenharia de Software para estruturar todo o processo de criação da aplicação, além disso também foi proposto a implementação de conceitos de banco de dados para persistir as informações do aplicativo. 
 
 O sistema consiste em uma aplicação desktop, que permite um enfermeiro que atue em um hospital ou casa de acolhimento, gerenciar os prontuários dos pacientes de forma simples e prática. Foram utilizadas as tecnologias Maven, Postgresql, Java 8, Javafx e Figma.  
 
