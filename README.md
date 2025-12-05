@@ -53,7 +53,7 @@ Para executar a aplicação, você deve:
 - Certificar-se de que o PostgreSQL / pgAdmin 4 esteja instalado no seu computador
 - Criar o banco de dados prontuario no pgAdmin 4 e criar as tabelas a partir do script armazenado na pasta sql
 - Acessar a classe ConnectionFactory na pasta db, e inserir o nome de usuário (por padrão, postgres) e a senha da sua conta no PostgreSQL
-- Caso na primeira execução, ocorrer uma falha de conexão com o banco de dados, feche o programa e execute novamente na sua IDE, pois às vezes a conexão pode falhar momentaneamente.
+- Caso na primeira execução, ocorrer uma falha de conexão com o banco de dados, feche o programa e execute novamente na sua IDE, pois às vezes a conexão pode falhar momentaneamente
 
 ## Aprendizados obtidos 📝: 
 
