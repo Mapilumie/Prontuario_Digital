@@ -191,7 +191,7 @@ public class ProntuarioController implements Initializable {
 		
 		txtMotivoInternacao.textProperty().addListener((obs, oldValue, newValue) -> {
 			if (motivoOncologicoVazio && !newValue.isEmpty()) {
-				txtMotivoInternacao.setStyle("-fx-background-color: #fffff; -fx-background-radius: 8px");
+				txtMotivoInternacao.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
 				motivoOncologicoVazio = false;
 			}
 		});
@@ -515,32 +515,32 @@ public class ProntuarioController implements Initializable {
 				Cell labelEndereco = new Cell(1, 1).add(new Paragraph("Endereço:").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(labelEndereco);
 				
-				Cell conteudoEndereco = new Cell(1, 1).add(new Paragraph(p.getEndereco()).setFontSize(11).setFont(arial));
+				Cell conteudoEndereco = new Cell(1, 1).add(new Paragraph((p.getEndereco() != null && !p.getEndereco().isEmpty()) ? p.getEndereco() : "").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(conteudoEndereco);
 				
 				Cell labelProfissao = new Cell(1, 1).add(new Paragraph("Profissão:").setFontSize(11).setFont(arial).setVerticalAlignment(VerticalAlignment.MIDDLE));
 				tabelaPaciente.addCell(labelProfissao);
 				
-				Cell conteudoProfissao = new Cell(1, 1).add(new Paragraph(txtProfissao.getText()).setFontSize(11).setFont(arial).setVerticalAlignment(VerticalAlignment.MIDDLE));
+				Cell conteudoProfissao = new Cell(1, 1).add(new Paragraph((!txtProfissao.getText().isEmpty()) ? txtProfissao.getText() : "").setFontSize(11).setFont(arial).setVerticalAlignment(VerticalAlignment.MIDDLE));
 				tabelaPaciente.addCell(conteudoProfissao);
 				
 				Cell labelIdade = new Cell(1, 1).add(new Paragraph("Idade:").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(labelIdade);
 				
-				String idade = Integer.toString(Period.between(p.getDataNascimento(), LocalDate.now()).getYears());
+				String idade = (p.getDataNascimento() != null) ? Integer.toString(Period.between(p.getDataNascimento(), LocalDate.now()).getYears()) : "";
 				Cell conteudoIdade = new Cell(1, 1).add(new Paragraph(idade).setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(conteudoIdade);
 				
 				Cell labelSexo = new Cell(1, 1).add(new Paragraph("Sexo:").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(labelSexo);
 				
-				Cell conteudoSexo = new Cell(1, 1).add(new Paragraph((p.getSexo() == 'F') ? "Feminino" : "Masculino").setFontSize(11).setFont(arial));
+				Cell conteudoSexo = new Cell(1, 1).add(new Paragraph((Character.valueOf(p.getSexo()) != null) ? ((p.getSexo() == 'F') ? "Feminino" : "Masculino") : "").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(conteudoSexo);
 				
 				Cell labelEstadoCivil = new Cell(1, 1).add(new Paragraph("Estado civil:").setFontSize(11).setFont(arial).setVerticalAlignment(VerticalAlignment.MIDDLE));
 				tabelaPaciente.addCell(labelEstadoCivil);
 				
-				Cell conteudoEstadoCivil = new Cell(1, 1).add(new Paragraph(p.getEstadoCivil()).setFontSize(11).setFont(arial).setVerticalAlignment(VerticalAlignment.MIDDLE));
+				Cell conteudoEstadoCivil = new Cell(1, 1).add(new Paragraph((p.getEstadoCivil() != null && !p.getEstadoCivil().isEmpty()) ? p.getEstadoCivil() : "").setFontSize(11).setFont(arial).setVerticalAlignment(VerticalAlignment.MIDDLE));
 				tabelaPaciente.addCell(conteudoEstadoCivil);
 				
 				Cell labelMarcarRisco = new Cell(1, 1).add(new Paragraph("Fatores de risco (marque):").setFontSize(11).setFont(arial));
@@ -609,19 +609,19 @@ public class ProntuarioController implements Initializable {
 				Cell labelAlergias = new Cell(1, 1).add(new Paragraph("Alergias:").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(labelAlergias);
 				
-				Cell conteudoAlergias = new Cell(1, 3).add(new Paragraph(txtAlergias.getText()).setFontSize(11).setFont(arial));
+				Cell conteudoAlergias = new Cell(1, 3).add(new Paragraph((txtAlergias.getText() != null && !txtAlergias.getText().isEmpty()) ? txtAlergias.getText() : "").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(conteudoAlergias);
 				
 				Cell labelTelefone = new Cell(1, 1).add(new Paragraph("Contato de emergência (telefone):").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(labelTelefone);
 				
-				Cell conteudoTelefone = new Cell(1, 3).add(new Paragraph(txtTelefone.getText()).setFontSize(11).setFont(arial));
+				Cell conteudoTelefone = new Cell(1, 3).add(new Paragraph((txtTelefone.getText() != null && !txtTelefone.getText().isEmpty()) ? txtTelefone.getText() : "").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(conteudoTelefone);
 				
 				Cell labelObservacoes = new Cell(1, 1).add(new Paragraph("Observações:").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(labelObservacoes);
 				
-				Cell conteudoObservacoes = new Cell(1, 3).add(new Paragraph(pr.getObservacao()).setFontSize(11).setFont(arial));
+				Cell conteudoObservacoes = new Cell(1, 3).add(new Paragraph((pr.getObservacao() != null && !pr.getObservacao().isEmpty()) ? pr.getObservacao() : "").setFontSize(11).setFont(arial));
 				tabelaPaciente.addCell(conteudoObservacoes);
 				
 				doc.add(tabelaPaciente);

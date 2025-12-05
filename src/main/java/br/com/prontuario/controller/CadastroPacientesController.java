@@ -540,7 +540,7 @@ public class CadastroPacientesController implements Initializable {
 		if (modificado.getDataNascimento() != null) dpNasc.setValue(modificado.getDataNascimento());
 		if (modificado.getDataEntrada() != null) dpEntrada.setValue(modificado.getDataEntrada().toLocalDate());
 		if (modificado.getDataSaida() != null) dpSaida.setValue(modificado.getDataSaida().toLocalDate());
-		if (!modificado.getEndereco().isEmpty()) txtEndereco.setText(modificado.getEndereco());
+		if (modificado.getEndereco() != null && !modificado.getEndereco().isEmpty()) txtEndereco.setText(modificado.getEndereco());
 		
 		List<Acompanhante> acompanhantes = new AcompanhanteDAO().findAllByPaciente(modificado);
 		Acompanhante a = null;
