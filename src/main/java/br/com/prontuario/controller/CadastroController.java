@@ -34,8 +34,6 @@ public class CadastroController implements Initializable {
 	@FXML private Button btnCadastrar;
 	@FXML private AnchorPane avisoCamposVazios;
 	@FXML private Button btnOkCamposVazios;
-	@FXML private AnchorPane avisoSenhaInvalida;
-	@FXML private Button btnOkSenhaInvalida;
 	
 	// Variaveis e instancias
 	private boolean nomeVazio;
@@ -135,30 +133,25 @@ public class CadastroController implements Initializable {
 			String email = txtEmail.getText();
 			String senha = txtSenha.getText();
 			EnfermeiroDAO dao = new EnfermeiroDAO();
+		
+			Enfermeiro e = new Enfermeiro(coren, nome, email, senha);
+			dao.save(e);
 			
-			if (autenticarSenha(senha)) {
-				Enfermeiro e = new Enfermeiro(coren, nome, email, senha);
-				dao.save(e);
-				
-				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPrincipal.fxml"));
-					Parent root = loader.load();
-					Scene scene = new Scene(root);
-					PrincipalController p = loader.getController();
-					p.carregarUsuario(e);
-					p.receber();
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaPrincipal.fxml"));
+				Parent root = loader.load();
+				Scene scene = new Scene(root);
+				PrincipalController p = loader.getController();
+				p.carregarUsuario(e);
+				p.receber();
 
-					Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					stage.setTitle("Prontuário Digital - " + e.getNome());
-					stage.setScene(scene);
-				} 
-				catch (IOException ex) {
-					ex.printStackTrace();
-				} 
+				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				stage.setTitle("Prontuário Digital - " + e.getNome());
+				stage.setScene(scene);
 			} 
-			else {
-				avisoSenhaInvalida.setVisible(true);
-			}
+			catch (IOException ex) {
+				ex.printStackTrace();
+			} 
 		}
 		else {
 			nomeVazio = txtNome.getText().isEmpty();
@@ -201,21 +194,6 @@ public class CadastroController implements Initializable {
 	}
 	
 	@FXML
-	private void hoverOkSenhaInvalida(MouseEvent event) {
-		btnOkSenhaInvalida.setStyle("-fx-background-color: #297373; -fx-background-radius: 5px");
-	}
-	
-	@FXML
-	private void exitOkSenhaInvalida(MouseEvent event) {
-		btnOkSenhaInvalida.setStyle("-fx-background-color: #4c9292; -fx-background-radius: 5px");
-	}
-	
-	@FXML
-	private void ocultarAvisoSenhaInvalida(ActionEvent event) {
-		avisoSenhaInvalida.setVisible(false);
-	}
-	
-	@FXML
 	private void abrirTelaLogin(MouseEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TelaLogin.fxml"));
 		Parent root = loader.load();
@@ -232,19 +210,5 @@ public class CadastroController implements Initializable {
 		}
 		
 		return false;
-	}
-	
-	private boolean autenticarSenha(String senha) {
-		List<Enfermeiro> enfermeiros = new EnfermeiroDAO().findAll();
-		boolean autenticado = true;
-		
-		for (int i = 0; i < enfermeiros.size(); i++) {
-			if (enfermeiros.get(i).getSenha().equals(senha)) {
-				autenticado = false;
-				break;
-			}
-		}
-		
-		return autenticado;
 	}
 }

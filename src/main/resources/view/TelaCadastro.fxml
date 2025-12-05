@@ -104,26 +104,5 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="avisoSenhaInvalida" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
-         <children>
-            <AnchorPane layoutX="176.0" layoutY="176.0" prefHeight="149.0" prefWidth="348.0" style="-fx-background-color: #C9CCCC; -fx-background-radius: 8px;">
-               <children>
-                  <Label layoutX="47.0" layoutY="25.0" prefHeight="55.0" prefWidth="254.0" styleClass="labels" stylesheets="@../css/inicio.css" text="Senha inválida! Escolha uma senha diferente." wrapText="true">
-                     <font>
-                        <Font name="Afacad Regular" size="20.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btnOkSenhaInvalida" layoutX="149.0" layoutY="95.0" mnemonicParsing="false" onAction="#ocultarAvisoSenhaInvalida" onMouseEntered="#hoverOkSenhaInvalida" onMouseExited="#exitOkSenhaInvalida" prefHeight="29.0" prefWidth="50.0" style="-fx-background-color: #4c9292; -fx-background-radius: 5px;" styleClass="botao" stylesheets="@../css/inicio.css" text="OK" textFill="WHITE">
-                     <font>
-                        <Font name="Afacad SemiBold" size="15.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
    </children>
 </AnchorPane>

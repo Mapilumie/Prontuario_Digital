@@ -321,6 +321,11 @@ public class CadastroPacientesController implements Initializable {
 			if (digitouAcompanhante && nomeAcompanhanteVazio) txtNomeAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
 			if (digitouAcompanhante && cpfAcompanhanteVazio) txtCPFAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: #f3673a; -fx-border-width: 2px");
 			
+			if (!digitouAcompanhante) {
+				txtNomeAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
+				txtCPFAcompanhante.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8px");
+			}
+			
 			avisoCamposObrigatorios.setVisible(true);
 		}
 	}
